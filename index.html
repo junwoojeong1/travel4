@@ -107,8 +107,7 @@ html { scroll-behavior: smooth; }
     <div class="day-header" role="navigation" aria-label="Day navigation">
       <button class="day-arrow" id="prevDay">◀</button>
       <div style="text-align:center">
-        <div class="day-title" id="dayTitle">Day 0</div>
-        <div class="day-sub" id="dayDate">전체 일정</div>
+        <div class="day-title" id="dayTitle">전체 일정</div>
       </div>
       <button class="day-arrow right" id="nextDay">▶</button>
     </div>
@@ -156,7 +155,7 @@ html { scroll-behavior: smooth; }
 
     <button class="add-btn" id="addBottomBtn" style="margin-bottom:16px">＋ 장소 추가하기</button>
 
-    <footer style="text-align:center;color:var(--muted);padding:10px 0 60px 0;font-weight:700">저장: 로컬 · GitHub Pages 배포 가능</footer>
+    <footer style="text-align:center;color:var(--muted);padding:10px 0 60px 0;font-weight:700">Be a HAaaaPPY Travel!</footer>
   </div>
 
   <!-- bottom bar -->
@@ -177,7 +176,7 @@ html { scroll-behavior: smooth; }
 
 const TOTAL_DAYS = 9;
 let currentDay = 0;
-const RECOMMENDED_LABELS = ['맛집','카페','관광지','쇼핑','뷰포인트','온천','야경','역/교통','시장','박물관','휴식'];
+const RECOMMENDED_LABELS = ['맛집','카페','관광지','쇼핑','뷰포인트','온천','야경','교통','시장','박물관','휴식'];
 
 // DOM refs
 const startPlanBtn = document.getElementById('startPlanBtn');
@@ -331,7 +330,7 @@ function render(){
 
     // inputs
     const inputName = document.createElement('input'); inputName.className='input'; inputName.placeholder='장소명'; inputName.value = p.name || '';
-    const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='장소 종류'; inputType.value = p.type || '';
+    const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='메모 추가'; inputType.value = p.type || '';
 
     // labels UI
     const labelRow = document.createElement('div'); labelRow.style.display='flex'; labelRow.style.flexWrap='wrap'; labelRow.style.gap='8px';
