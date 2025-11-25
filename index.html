@@ -5,13 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>오사카 여행 — 성인 준우의 첫 여행</title>
 
-<!-- 참고로 업로드된 이미지 로컬 경로(필요시 변환해서 사용) -->
-<!-- /mnt/data/20251125_19024238.jpg -->
-<!-- /mnt/data/20251125_19024627.jpg -->
-<!-- /mnt/data/20251125_19025513.jpg -->
-
 <style>
-/* 폰트 (요청한 것 사용) */
 @font-face { font-family: 'FlightSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/FlightSans-Bold.woff2') format('woff2'); font-weight:700; font-display:swap;}
 @font-face { font-family: 'GMarketSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight:500; font-display:swap;}
 @import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
@@ -23,42 +17,29 @@
   --card-bg: #ffffff;
   --accent: #1ea6ff;
   --accent-2: #28c7ff;
-  --accent-warm: #ff8c42;
   --chip-bg: rgba(30,166,255,0.08);
   --max-mobile:420px;
-  --radius:14px;
-  --spacer-h: 120vh; /* 시작 페이지와 Day 간격: 휴대폰 하나 이상 */
+  --spacer-h: 110vh;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--page-bg);color:var(--text);font-family:'Wanted Sans','WantedSansVariable', "Noto Sans KR", system-ui,-apple-system; -webkit-font-smoothing:antialiased}
+html,body{height:100%;margin:0;background:var(--page-bg);color:var(--text);font-family:'Wanted Sans','WantedSansVariable', "Noto Sans KR", system-ui,-apple-system;-webkit-font-smoothing:antialiased}
 .container{margin:0 auto;width:100%;max-width:var(--max-mobile);min-height:100vh;display:flex;flex-direction:column;padding-bottom:calc(132px + env(safe-area-inset-bottom));overflow-x:hidden}
 
-/* HERO */
-.hero{
-  position:relative;width:100%;height:50vw;min-height:320px;overflow:hidden;border-bottom-left-radius:18px;border-bottom-right-radius:18px;margin-top:10px;box-shadow:0 10px 30px rgba(10,14,20,0.06)
-}
-.hero iframe{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;border:0;pointer-events:none;filter:contrast(0.95) brightness(0.78) saturate(1.05);z-index:0
-}
-.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(250,249,246,0.0), rgba(250,249,246,0.36));}
-
-/* HERO 텍스트: 명확한 가독성을 위해 다크 텍스트 사용 */
+/* Hero */
+.hero{position:relative;width:100%;height:52vw;min-height:320px;overflow:hidden;border-bottom-left-radius:18px;border-bottom-right-radius:18px;margin-top:10px;box-shadow:0 10px 30px rgba(10,14,20,0.06)}
+.hero iframe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;border:0;pointer-events:none;filter:contrast(0.95) brightness(0.78) saturate(1.05);z-index:0}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(250,249,246,0.0), rgba(250,249,246,0.34));}
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:22px}
 .subtitle{font-family:'GMarketSans',sans-serif;font-weight:500;color:var(--text);background:rgba(255,255,255,0.88);padding:6px 10px;border-radius:999px;margin-bottom:10px;box-shadow:0 6px 18px rgba(10,14,20,0.04)}
-.title{font-family:'FlightSans','FlightSans-Bold',sans-serif;font-size:2.6rem;font-weight:700;color:var(--text);margin:0;text-shadow:none}
+.title{font-family:'FlightSans','FlightSans-Bold',sans-serif;font-size:2.6rem;font-weight:700;color:var(--text);margin:0}
 .dates{margin-top:12px;background:rgba(7,20,30,0.03);padding:8px 14px;border-radius:12px;color:var(--muted);font-weight:700}
+.hero-cta{margin-top:22px;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202b;padding:12px 18px;border-radius:999px;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 40px rgba(30,166,255,0.14);transition:transform .12s;}
+.hero-cta:active{transform:translateY(2px) scale(.995);}
 
-/* CTA (클릭 애니메이션) */
-.hero-cta{
-  margin-top:22px;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202b;padding:12px 18px;border-radius:999px;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 40px rgba(30,166,255,0.14);
-  transition: transform .12s ease, box-shadow .12s;
-}
-.hero-cta:active{transform:translateY(2px) scale(.995); box-shadow:0 8px 20px rgba(30,166,255,0.08)}
-
-/* 스페이서: 시작 페이지와 Day 간격 (휴대폰 한대 분 이상) */
+/* spacer (gap between hero and day section) */
 .spacer{height:var(--spacer-h); width:100%;}
 
-/* Day header */
+/* day header */
 .day-header{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 6px;margin-top:18px;position:relative}
 .day-arrow{position:absolute;left:8px;top:50%;transform:translateY(-50%);opacity:0.92;background:transparent;border:0;color:var(--muted);font-size:1.1rem;padding:8px;border-radius:10px}
 .day-arrow.right{left:auto;right:8px}
@@ -69,19 +50,11 @@ html,body{height:100%;margin:0;background:var(--page-bg);color:var(--text);font-
 .add-btn{display:block;margin:8px auto;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:12px 18px;color:#01202b;font-weight:900;text-align:center;min-width:220px;box-shadow:0 10px 30px rgba(30,166,255,0.12);cursor:pointer;border:0;transition:transform .12s}
 .add-btn:active{transform:translateY(2px)}
 
-/* Day0 필터 바 (Day0에서만 표시) */
-.filter-bar{
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:10px 6px;margin:8px 10px;border-radius:12px;background:rgba(255,255,255,0.85);box-shadow:0 6px 18px rgba(10,14,20,0.03)
-}
+/* filter bar (Day0 only) */
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:10px 6px;margin:8px 10px;border-radius:12px;background:rgba(255,255,255,0.85);box-shadow:0 6px 18px rgba(10,14,20,0.03)}
 .filter-bar select, .filter-bar input[type="text"]{padding:8px 10px;border-radius:10px;border:1px solid rgba(7,20,30,0.06);background:white;color:var(--text);font-weight:700}
-.filter-bar .small{font-size:0.85rem;color:var(--muted);font-weight:700}
 
-/* card */
-.card-empty{margin:18px;border-radius:14px;padding:28px 22px;text-align:center;background:var(--card-bg);box-shadow:0 18px 48px rgba(10,14,20,0.04);border:1px solid rgba(7,20,30,0.04)}
-.card-empty h3{font-size:1.15rem;margin:8px 0 4px 0;color:var(--text)}
-.card-empty p{color:var(--muted);margin:6px 0 14px 0}
-
-/* places list */
+/* list / cards */
 .places{margin:14px;padding:0 10px 20px 10px;display:flex;flex-direction:column;gap:12px}
 .place{background:var(--card-bg);border-radius:12px;padding:12px;border:1px solid rgba(7,20,30,0.04);display:flex;flex-direction:column;gap:8px;transition:transform .12s, box-shadow .12s}
 .place:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(10,14,20,0.04)}
@@ -110,10 +83,7 @@ html,body{height:100%;margin:0;background:var(--page-bg);color:var(--text);font-
 .export-btn{background:white;border:1px solid rgba(7,20,30,0.06);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:800;cursor:pointer}
 .import-label{background:white;border:1px dashed rgba(7,20,30,0.06);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:800;cursor:pointer}
 
-/* smooth scrolling baseline */
 html { scroll-behavior: smooth; }
-
-/* responsive */
 @media(min-width:900px){ .container{max-width:960px} .title{font-size:3.4rem} .hero{height:56vh;border-radius:20px} }
 </style>
 </head>
@@ -122,7 +92,6 @@ html { scroll-behavior: smooth; }
     <!-- HERO -->
     <header class="hero" id="hero" role="banner" aria-label="오사카 야경">
       <iframe id="bgVideo" src="https://www.youtube.com/embed/G5RpJwCJDqc?autoplay=1&mute=1&controls=0&loop=1&playlist=G5RpJwCJDqc&modestbranding=1&playsinline=1" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-
       <div class="hero-inner">
         <div class="subtitle">성인 준우의 첫 여행</div>
         <h1 class="title">오사카 여행</h1>
@@ -131,7 +100,7 @@ html { scroll-behavior: smooth; }
       </div>
     </header>
 
-    <!-- spacer: increases gap between start and day pages -->
+    <!-- spacer between hero & day -->
     <div class="spacer" id="spacer"></div>
 
     <!-- Day header -->
@@ -144,10 +113,9 @@ html { scroll-behavior: smooth; }
       <button class="day-arrow right" id="nextDay">▶</button>
     </div>
 
-    <!-- Top add -->
     <button class="add-btn" id="addTopBtn">＋ 장소 추가하기</button>
 
-    <!-- Filter bar (visible only on Day0) -->
+    <!-- Day0 filter (only visible on Day0) -->
     <div id="filterBarContainer" style="margin:8px">
       <div class="filter-bar" id="filterBar">
         <div class="small">종류</div>
@@ -165,11 +133,10 @@ html { scroll-behavior: smooth; }
         <div class="small">검색</div>
         <input id="searchTxt" type="text" placeholder="이름 / 종류 / 라벨로 검색" />
 
-        <button id="clearFilters" style="padding:8px 10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202b;font-weight:900;cursor:pointer">초기화</button>
+        <button id="clearFilters" style="padding:8px 10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202B;font-weight:900;cursor:pointer">초기화</button>
       </div>
     </div>
 
-    <!-- Day card / list -->
     <main>
       <section class="day-card">
         <div id="placesRoot">
@@ -187,7 +154,6 @@ html { scroll-behavior: smooth; }
       </section>
     </main>
 
-    <!-- Bottom Add -->
     <button class="add-btn" id="addBottomBtn" style="margin-bottom:16px">＋ 장소 추가하기</button>
 
     <footer style="text-align:center;color:var(--muted);padding:10px 0 60px 0;font-weight:700">저장: 로컬 · GitHub Pages 배포 가능</footer>
@@ -195,7 +161,7 @@ html { scroll-behavior: smooth; }
 
   <!-- bottom bar -->
   <div class="bottom-bar" role="region" aria-label="하단 바">
-    <button id="saveBtn" class="save-btn" title="현재 Day 저장">저장</button>
+    <button id="saveBtn" class="save-btn">저장</button>
     <button id="exportBtn" class="export-btn">내보내기 (JSON)</button>
     <label class="import-label">불러오기 <input id="importFile" type="file" accept="application/json" style="display:none"></label>
     <div style="width:8px"></div>
@@ -203,29 +169,19 @@ html { scroll-behavior: smooth; }
   </div>
 
 <script>
-/* App JS (수정본)
- - 검색은 Day0에만 표시 (filterBarContainer 표시 제어)
- - Day0는 모든 장소 목록을 쭉 보여줌 (필터 적용 가능)
- - 제목 색상/버튼 색상 보정은 CSS에 반영
- - spacer(높은 여백) 추가
- - 길게 스크롤 또는 버튼 클릭 시 빠른 애니메이션으로 Day1으로 이동
- - 터치 스와이프/휠 제스처로 이동 트리거
- - 기존 기능(저장, 내보내기, 불러오기, 라벨, 날짜 이동) 유지
+/* 안정성 최우선: 견고한 로컬 저장 + 즉시 업데이트 방식
+   - day keys: osaka_day_1 ... osaka_day_9 (유지 및 호환)
+   - currentDay: 0 = Day0 aggregated view, 1..9 = per day
+   - edits auto-save to the place's day
 */
 
 const TOTAL_DAYS = 9;
-let currentDay = 0; // 0 = Day 0 (전체)
-const dayLabels = ['전체 일정','12월 6일','12월 7일','12월 8일','12월 9일','12월 10일','12월 11일','12월 12일','12월 13일','12월 14일'];
-
-// 추천 라벨
-const RECOMMENDED_LABELS = [
-  '맛집','카페','관광지','쇼핑','뷰포인트','온천','야경','역/교통','시장','박물관','휴식'
-];
+let currentDay = 0;
+const RECOMMENDED_LABELS = ['맛집','카페','관광지','쇼핑','뷰포인트','온천','야경','역/교통','시장','박물관','휴식'];
 
 // DOM refs
-const hero = document.getElementById('hero');
-const spacer = document.getElementById('spacer');
 const startPlanBtn = document.getElementById('startPlanBtn');
+const spacer = document.getElementById('spacer');
 const dayTitle = document.getElementById('dayTitle');
 const dayDate = document.getElementById('dayDate');
 const prevDay = document.getElementById('prevDay');
@@ -235,11 +191,6 @@ const addBottomBtn = document.getElementById('addBottomBtn');
 const emptyAddBtn = document.getElementById('emptyAddBtn');
 const placesList = document.getElementById('placesList');
 const emptyCard = document.getElementById('emptyCard');
-const saveBtn = document.getElementById('saveBtn');
-const exportBtn = document.getElementById('exportBtn');
-const importFile = document.getElementById('importFile');
-const statusText = document.getElementById('statusText');
-
 const filterBarContainer = document.getElementById('filterBarContainer');
 const filterType = document.getElementById('filterType');
 const filterTag = document.getElementById('filterTag');
@@ -247,78 +198,95 @@ const sortCharm = document.getElementById('sortCharm');
 const filterMove = document.getElementById('filterMove');
 const searchTxt = document.getElementById('searchTxt');
 const clearFilters = document.getElementById('clearFilters');
+const saveBtn = document.getElementById('saveBtn');
+const exportBtn = document.getElementById('exportBtn');
+const importFile = document.getElementById('importFile');
+const statusText = document.getElementById('statusText');
 
-// storage helpers
+// --- storage helpers ---
 function storageKey(d){ return 'osaka_day_' + d; }
+// initialize days if missing (but DO NOT overwrite existing)
 for(let i=1;i<=TOTAL_DAYS;i++){
-  if(!localStorage.getItem(storageKey(i))) localStorage.setItem(storageKey(i), JSON.stringify({places:[]}));
+  if(!localStorage.getItem(storageKey(i))){
+    localStorage.setItem(storageKey(i), JSON.stringify({places:[]}));
+  }
 }
 function loadDay(d){
-  if(d < 1 || d > TOTAL_DAYS) return { places: [] };
-  try{ return JSON.parse(localStorage.getItem(storageKey(d))) || {places:[]} }catch(e){ return {places:[]} }
+  if(d < 1 || d > TOTAL_DAYS) return {places:[]};
+  try { return JSON.parse(localStorage.getItem(storageKey(d))) || {places:[]} } catch(e){ return {places:[]} }
 }
 function saveDay(data, d){
   if(d < 1 || d > TOTAL_DAYS) return;
   localStorage.setItem(storageKey(d), JSON.stringify(data));
 }
-function loadAllPlaces(){
-  const all = [];
+function findPlaceDay(placeId){
   for(let d=1; d<=TOTAL_DAYS; d++){
     const day = loadDay(d);
-    (day.places || []).forEach(p => { all.push({...p, _day: d}); });
+    if((day.places||[]).some(p=>p.id===placeId)) return d;
+  }
+  return null;
+}
+function getPlaceFromDay(placeId){
+  for(let d=1; d<=TOTAL_DAYS; d++){
+    const day = loadDay(d);
+    const p = (day.places||[]).find(x=>x.id===placeId);
+    if(p) return {day:d, place: p};
+  }
+  return null;
+}
+function getAllPlaces(){
+  const all = [];
+  for(let d=1; d<=TOTAL_DAYS; d++){
+    (loadDay(d).places || []).forEach(p => all.push({...p, _day: d}));
   }
   return all;
 }
+
+// place factory
+function newPlace(){
+  return { id: 'p_' + Date.now() + Math.floor(Math.random()*1000), name:'', type:'', location:3, price:3, charm:3, memo:'', moveToNext:'', labels:[] };
+}
+
+// status
 function setStatus(txt){
   statusText.textContent = txt;
   if(txt === '변경 사항 없음') saveBtn.classList.remove('active'); else saveBtn.classList.add('active');
 }
 
-// place factory
-function newPlace(){
-  return { id:'p_'+Date.now()+Math.floor(Math.random()*1000), name:'', type:'', location:3, price:3, charm:3, memo:'', moveToNext:'', labels:[] };
-}
-
-// rebuild filter options from existing data
+// rebuild filter options for Day0
 function rebuildFilterOptions(){
-  const all = loadAllPlaces();
+  const all = getAllPlaces();
   const types = Array.from(new Set(all.map(p => (p.type||'').trim()).filter(Boolean))).sort();
   filterType.innerHTML = '<option value="">전체</option>';
-  types.forEach(t => { const o = document.createElement('option'); o.value=t; o.textContent=t; filterType.appendChild(o); });
+  types.forEach(t => { const o=document.createElement('option'); o.value=t; o.textContent=t; filterType.appendChild(o); });
 
   const allLabels = new Set(RECOMMENDED_LABELS);
   all.forEach(p => (p.labels||[]).forEach(l=>allLabels.add(l)));
   filterTag.innerHTML = '<option value="">전체</option>';
-  Array.from(allLabels).sort().forEach(l => { const o = document.createElement('option'); o.value=l; o.textContent=l; filterTag.appendChild(o); });
+  Array.from(allLabels).sort().forEach(l => { const o=document.createElement('option'); o.value=l; o.textContent=l; filterTag.appendChild(o); });
 }
 
-/* render */
+/* Render (single source of truth) */
 function render(){
-  // header
-  dayTitle.textContent = currentDay === 0 ? 'Day 0' : 'Day ' + currentDay;
-  dayDate.textContent = dayLabels[currentDay] || '';
+  dayTitle.textContent = (currentDay === 0) ? 'Day 0' : 'Day ' + currentDay;
+  dayDate.textContent = (currentDay === 0) ? '전체 일정' : '';
 
-  // show/hide filter bar only on Day0
+  // show filter only on Day0
   filterBarContainer.style.display = (currentDay === 0) ? 'block' : 'none';
-
   rebuildFilterOptions();
 
-  let items = [];
-  if(currentDay === 0) items = loadAllPlaces();
-  else {
-    const d = loadDay(currentDay);
-    items = (d.places || []).map(p => ({...p, _day: currentDay}));
-  }
+  // items
+  let items = (currentDay === 0) ? getAllPlaces() : (loadDay(currentDay).places || []).map(p => ({...p, _day: currentDay}));
 
-  // Day0 filters/search/sort
+  // Day0 filters
   if(currentDay === 0){
     const tfilter = filterType.value;
     const tagfilter = filterTag.value;
     const movefilter = filterMove.value;
-    const q = (searchTxt.value || '').toLowerCase();
+    const q = (searchTxt.value || '').trim().toLowerCase();
     items = items.filter(p => {
       if(tfilter && ((p.type||'').toLowerCase() !== tfilter.toLowerCase())) return false;
-      if(tagfilter && !((p.labels||[]).includes(tagfilter))) return false;
+      if(tagfilter && !(p.labels||[]).includes(tagfilter)) return false;
       if(movefilter && String(p.moveToNext || '') !== movefilter) return false;
       if(q){
         const hay = ((p.name||'') + ' ' + (p.type||'') + ' ' + ((p.labels||[]).join(' '))).toLowerCase();
@@ -326,20 +294,17 @@ function render(){
       }
       return true;
     });
-    const sortMode = sortCharm.value;
-    if(sortMode === 'desc') items.sort((a,b)=> (b.charm||0)-(a.charm||0));
-    if(sortMode === 'asc') items.sort((a,b)=> (a.charm||0)-(b.charm||0));
+    if(sortCharm.value === 'desc') items.sort((a,b)=> (b.charm || 0) - (a.charm || 0));
+    if(sortCharm.value === 'asc') items.sort((a,b)=> (a.charm || 0) - (b.charm || 0));
   }
 
-  // always show full list (Day0 and others)
+  // render list
   placesList.innerHTML = '';
-  if(!items || items.length === 0){
-    emptyCard.style.display = 'block';
-    return;
-  } else emptyCard.style.display = 'none';
+  if(!items || items.length === 0){ emptyCard.style.display = 'block'; return; } else emptyCard.style.display='none';
 
-  items.forEach((p, idx) => {
+  items.forEach(p => {
     const el = document.createElement('div'); el.className = 'place'; el.dataset.id = p.id;
+
     const sum = document.createElement('div'); sum.className = 'place-summary';
     const left = document.createElement('div'); left.className = 'place-left';
     const badge = document.createElement('div'); badge.className = 'badge'; badge.textContent = p.charm || 3;
@@ -356,36 +321,287 @@ function render(){
 
     // label chips
     const chipsWrap = document.createElement('div'); chipsWrap.className='chips';
-    (p.labels || []).forEach(lbl => { const c = document.createElement('div'); c.className='chip'; c.textContent = lbl; chipsWrap.appendChild(c); });
+    (p.labels || []).forEach(lbl => { const c=document.createElement('div'); c.className='chip'; c.textContent = lbl; chipsWrap.appendChild(c); });
 
     const right = document.createElement('div'); right.style.display='flex'; right.style.flexDirection='column'; right.style.alignItems='flex-end';
-    const dot = document.createElement('div'); dot.className = 'chev'; dot.textContent = '⋯';
-    right.appendChild(dot);
+    const dot = document.createElement('div'); dot.className = 'chev'; dot.textContent = '⋯'; right.appendChild(dot);
     sum.appendChild(left); sum.appendChild(right);
 
-    // detail area
     const detail = document.createElement('div'); detail.className = 'place-detail';
+
+    // inputs
     const inputName = document.createElement('input'); inputName.className='input'; inputName.placeholder='장소명'; inputName.value = p.name || '';
     const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='장소 종류'; inputType.value = p.type || '';
 
-    // labels area
-    const labelBox = document.createElement('div'); labelBox.style.display='flex'; labelBox.style.flexDirection='column'; labelBox.style.gap='8px';
+    // labels UI
     const labelRow = document.createElement('div'); labelRow.style.display='flex'; labelRow.style.flexWrap='wrap'; labelRow.style.gap='8px';
     RECOMMENDED_LABELS.forEach(lbl => {
-      const cb = document.createElement('button'); cb.type='button'; cb.className='chip'; cb.textContent = lbl; cb.style.cursor='pointer';
-      if((p.labels||[]).includes(lbl)) { cb.style.background = 'linear-gradient(90deg,var(--accent-2),var(--accent))'; cb.style.color='#01202b'; }
-      cb.addEventListener('click', ()=> {
-        p.labels = p.labels || [];
-        if(p.labels.includes(lbl)){ p.labels = p.labels.filter(x=>x!==lbl); cb.style.background = 'var(--chip-bg)'; cb.style.color='var(--text)'; }
-        else { p.labels.push(lbl); cb.style.background = 'linear-gradient(90deg,var(--accent-2),var(--accent))'; cb.style.color='#01202b'; }
-        el.dataset.dirty = '1'; setStatus('저장 필요 — 변경 사항 있음');
+      const btn = document.createElement('button'); btn.type='button'; btn.className='chip'; btn.textContent=lbl; btn.style.cursor='pointer';
+      if((p.labels||[]).includes(lbl)){ btn.style.background='linear-gradient(90deg,var(--accent-2),var(--accent))'; btn.style.color='#01202b'; }
+      btn.addEventListener('click', ()=>{
+        toggleLabel(p.id, lbl);
       });
-      labelRow.appendChild(cb);
+      labelRow.appendChild(btn);
     });
-    labelBox.appendChild(labelRow);
-    const addLabelRow = document.createElement('div'); addLabelRow.style.display='flex'; addLabelRow.style.gap='8px';
+
+    const addLabelBox = document.createElement('div'); addLabelBox.style.display='flex'; addLabelBox.style.gap='8px'; addLabelBox.style.marginTop='8px';
     const labelInput = document.createElement('input'); labelInput.className='input'; labelInput.placeholder='직접 라벨 추가';
     const labelAddBtn = document.createElement('button'); labelAddBtn.className='add-btn'; labelAddBtn.style.padding='8px 10px'; labelAddBtn.style.minWidth='auto'; labelAddBtn.textContent='추가';
     labelAddBtn.addEventListener('click', ()=> {
-      const val = (labelInput.value || '').trim(); if(!val) return;
-      p.labels = p.labels || []; if(!p.labels.includes(val)) p.labels
+      const val = (labelInput.value || '').trim(); if(!val) return; addLabelToPlace(p.id, val); labelInput.value=''; render();
+    });
+    addLabelBox.appendChild(labelInput); addLabelBox.appendChild(labelAddBtn);
+
+    // sliders
+    const rowLoc = document.createElement('div'); rowLoc.className='row';
+    const labelLoc = document.createElement('div'); labelLoc.className='label'; labelLoc.textContent='위치';
+    const rangeLoc = document.createElement('input'); rangeLoc.type='range'; rangeLoc.min=1; rangeLoc.max=5; rangeLoc.value=p.location||3; rangeLoc.className='range';
+    rowLoc.appendChild(labelLoc); rowLoc.appendChild(rangeLoc);
+
+    const rowPrice = document.createElement('div'); rowPrice.className='row';
+    const labelPrice = document.createElement('div'); labelPrice.className='label'; labelPrice.textContent='가격';
+    const rangePrice = document.createElement('input'); rangePrice.type='range'; rangePrice.min=1; rangePrice.max=5; rangePrice.value=p.price||3; rangePrice.className='range';
+    rowPrice.appendChild(labelPrice); rowPrice.appendChild(rangePrice);
+
+    const rowCharm = document.createElement('div'); rowCharm.className='row';
+    const labelCharm = document.createElement('div'); labelCharm.className='label'; labelCharm.textContent='종합 매력';
+    const rangeCharm = document.createElement('input'); rangeCharm.type='range'; rangeCharm.min=1; rangeCharm.max=5; rangeCharm.value=p.charm||3; rangeCharm.className='range';
+    rowCharm.appendChild(labelCharm); rowCharm.appendChild(rangeCharm);
+
+    // move select
+    const moveRow = document.createElement('div'); moveRow.className='row';
+    const moveLabel = document.createElement('div'); moveLabel.className='label'; moveLabel.textContent='이동시간';
+    const moveSelect = document.createElement('select'); moveSelect.className='input';
+    [['','미지정'],['30','30분 이하'],['60','1시간 이하'],['120','2시간 이하'],['240','2시간 이상']].forEach(opt=>{
+      const o = document.createElement('option'); o.value=opt[0]; o.textContent=opt[1]; if(String(p.moveToNext||'')===String(opt[0])) o.selected=true;
+      moveSelect.appendChild(o);
+    });
+    moveRow.appendChild(moveLabel); moveRow.appendChild(moveSelect);
+
+    // day selector
+    const dayRow = document.createElement('div'); dayRow.className='row';
+    const dayLbl = document.createElement('div'); dayLbl.className='label'; dayLbl.textContent='Assigned';
+    const daySelect = document.createElement('select'); daySelect.className='select-day';
+    for(let d=0; d<=TOTAL_DAYS; d++){ const o=document.createElement('option'); o.value=d; o.textContent = (d===0?'Day 0':'Day '+d); daySelect.appendChild(o); }
+    daySelect.value = p._day || (currentDay>0 ? currentDay : 1);
+    dayRow.appendChild(dayLbl); dayRow.appendChild(daySelect);
+
+    const actions = document.createElement('div'); actions.className='small-actions';
+    const gotoBtn = document.createElement('button'); gotoBtn.textContent='해당일로 이동';
+    const deleteBtn = document.createElement('button'); deleteBtn.textContent='삭제';
+    const upBtn = document.createElement('button'); upBtn.textContent='▲';
+    const downBtn = document.createElement('button'); downBtn.textContent='▼';
+    actions.appendChild(gotoBtn); actions.appendChild(deleteBtn); actions.appendChild(upBtn); actions.appendChild(downBtn);
+
+    // assemble detail
+    detail.appendChild(inputName);
+    detail.appendChild(inputType);
+    detail.appendChild(labelRow);
+    detail.appendChild(addLabelBox);
+    detail.appendChild(rowLoc); detail.appendChild(rowPrice); detail.appendChild(rowCharm);
+    detail.appendChild(moveRow); detail.appendChild(dayRow);
+    detail.appendChild(actions);
+
+    // events - toggles
+    sum.addEventListener('click', ()=> { const was = el.classList.toggle('open'); if(was) setTimeout(()=> el.scrollIntoView({behavior:'smooth', block:'center'}), 140); });
+
+    // input handlers which immediately persist changes to the underlying day storage
+    function immediateUpdate(updates){
+      // find which day currently holds this place
+      const fd = getPlaceFromDay(p.id);
+      const targetDay = fd ? fd.day : (p._day || 1);
+      if(!fd){
+        // if not found, create in target day
+        const dayObj = loadDay(targetDay); dayObj.places = dayObj.places || []; dayObj.places.push({...p}); saveDay(dayObj, targetDay);
+      }
+      const dayObj = loadDay(targetDay);
+      const idx = (dayObj.places||[]).findIndex(x=>x.id===p.id);
+      if(idx === -1) {
+        // nothing to update (safety)
+        return;
+      }
+      dayObj.places[idx] = {...dayObj.places[idx], ...updates};
+      saveDay(dayObj, targetDay);
+      setStatus('저장됨');
+      // make sure UI updates reflect saved data
+    }
+
+    inputName.addEventListener('input', ()=> immediateUpdate({name: inputName.value}));
+    inputType.addEventListener('input', ()=> immediateUpdate({type: inputType.value}));
+    rangeLoc.addEventListener('input', ()=> immediateUpdate({location: Number(rangeLoc.value)}));
+    rangePrice.addEventListener('input', ()=> immediateUpdate({price: Number(rangePrice.value)}));
+    rangeCharm.addEventListener('input', ()=> { badge.textContent = rangeCharm.value; immediateUpdate({charm: Number(rangeCharm.value)}); });
+    moveSelect.addEventListener('change', ()=> immediateUpdate({moveToNext: moveSelect.value}));
+    daySelect.addEventListener('change', ()=> {
+      const newDay = Number(daySelect.value);
+      movePlaceToDay(p.id, newDay);
+    });
+
+    // action handlers
+    gotoBtn.addEventListener('click', ()=> {
+      const assignedDay = (getPlaceFromDay(p.id) || {}).day || (p._day || 1);
+      if(assignedDay >=1 && assignedDay <= TOTAL_DAYS){
+        currentDay = assignedDay;
+        scrollToDayHeader();
+        render();
+      } else alert('할당된 날짜가 없습니다.');
+    });
+    deleteBtn.addEventListener('click', ()=> { if(!confirm('삭제하시겠습니까?')) return; deletePlaceById(p.id); });
+    upBtn.addEventListener('click', ()=> movePosition(p.id, -1));
+    downBtn.addEventListener('click', ()=> movePosition(p.id, 1));
+
+    if((p.labels || []).length > 0) left.appendChild(chipsWrap);
+    el.appendChild(sum); el.appendChild(detail);
+    placesList.appendChild(el);
+
+    // short move label
+    const shortMove = document.createElement('div'); shortMove.style.fontSize='0.86rem'; shortMove.style.color='var(--muted)';
+    const mv = p.moveToNext || ''; const mvLabel = ({'30':'30분 이하','60':'1시간 이하','120':'2시간 이하','240':'2시간 이상'})[mv] || '';
+    if(mvLabel) shortMove.textContent = `이동: ${mvLabel}`; sum.appendChild(shortMove);
+  });
+}
+
+/* Label toggles and CRUD helpers */
+function toggleLabel(placeId, label){
+  const rec = getPlaceFromDay(placeId);
+  if(!rec) return;
+  const day = loadDay(rec.day);
+  const idx = day.places.findIndex(x=>x.id===placeId);
+  if(idx===-1) return;
+  const labels = day.places[idx].labels || [];
+  if(labels.includes(label)) day.places[idx].labels = labels.filter(x=>x!==label);
+  else day.places[idx].labels = [...labels, label];
+  saveDay(day, rec.day);
+  setStatus('저장됨');
+  render();
+}
+function addLabelToPlace(placeId, label){
+  const rec = getPlaceFromDay(placeId);
+  const dayIndex = rec ? rec.day : 1;
+  const day = loadDay(dayIndex);
+  const idx = day.places.findIndex(x=>x.id===placeId);
+  if(idx===-1) return;
+  day.places[idx].labels = day.places[idx].labels || [];
+  if(!day.places[idx].labels.includes(label)) day.places[idx].labels.push(label);
+  saveDay(day, dayIndex);
+  setStatus('저장됨');
+}
+function deletePlaceById(placeId){
+  for(let d=1; d<=TOTAL_DAYS; d++){
+    const day = loadDay(d);
+    const idx = (day.places||[]).findIndex(x=>x.id===placeId);
+    if(idx>-1){ day.places.splice(idx,1); saveDay(day,d); setStatus('저장됨 — 삭제'); render(); return; }
+  }
+  alert('삭제 실패: 항목을 찾을 수 없음');
+}
+function movePosition(placeId, dir){
+  const fd = getPlaceFromDay(placeId);
+  if(!fd) return;
+  const day = loadDay(fd.day);
+  const idx = day.places.findIndex(x=>x.id===placeId);
+  if(idx === -1) return;
+  const ni = idx + dir;
+  if(ni<0 || ni>=day.places.length) return;
+  const [it] = day.places.splice(idx,1);
+  day.places.splice(ni,0,it);
+  saveDay(day, fd.day);
+  setStatus('저장됨 — 순서 변경');
+  render();
+}
+function movePlaceToDay(placeId, newDay){
+  const src = getPlaceFromDay(placeId);
+  if(!src){ alert('항목을 찾을 수 없음'); return; }
+  if(newDay === 0) newDay = 1;
+  if(newDay === src.day) return;
+  const srcDay = loadDay(src.day);
+  const idx = srcDay.places.findIndex(x=>x.id===placeId);
+  if(idx > -1){ const [it] = srcDay.places.splice(idx,1); saveDay(srcDay, src.day); const dest = loadDay(newDay); dest.places = dest.places || []; dest.places.push(it); saveDay(dest, newDay); setStatus('저장됨 — 날짜 이동'); render(); }
+}
+
+/* Add place */
+function addPlaceToDay(targetDay, atTop=false){
+  const p = newPlace();
+  const dayIndex = (targetDay >= 1 && targetDay <= TOTAL_DAYS) ? targetDay : 1;
+  const day = loadDay(dayIndex);
+  day.places = day.places || [];
+  if(atTop) day.places.unshift(p); else day.places.push(p);
+  saveDay(day, dayIndex);
+  setStatus('저장됨 — 추가');
+  render();
+}
+addTopBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, true); });
+addBottomBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); });
+if(emptyAddBtn) emptyAddBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); });
+
+/* Navigation */
+prevDay.addEventListener('click', ()=> { currentDay = (currentDay - 1 + (TOTAL_DAYS+1)) % (TOTAL_DAYS+1); render(); scrollToDayHeader(); });
+nextDay.addEventListener('click', ()=> { currentDay = (currentDay + 1) % (TOTAL_DAYS+1); render(); scrollToDayHeader(); });
+
+/* Filters binding (Day0 only) */
+[filterType, filterTag, sortCharm, filterMove, searchTxt].forEach(el => el.addEventListener('input', ()=> { if(currentDay===0) render(); }));
+clearFilters.addEventListener('click', ()=> { filterType.value=''; filterTag.value=''; sortCharm.value='none'; filterMove.value=''; searchTxt.value=''; render(); });
+
+/* Save/Export/Import */
+saveBtn.addEventListener('click', ()=> { setStatus('저장됨'); });
+exportBtn.addEventListener('click', ()=> {
+  const dump = {};
+  for(let d=1; d<=TOTAL_DAYS; d++) dump['Day'+d] = loadDay(d);
+  const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='osaka_trip_export.json'; a.click(); URL.revokeObjectURL(url);
+});
+importFile.addEventListener('change', e => {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try{
+      const obj = JSON.parse(ev.target.result);
+      let found=false;
+      for(let d=1; d<=TOTAL_DAYS; d++){
+        if(obj['Day'+d]){ saveDay(obj['Day'+d], d); found=true; }
+      }
+      if(!found && Array.isArray(obj.places)){ saveDay({places: obj.places}, 1); found=true; }
+      if(found){ alert('불러오기 완료'); setStatus('변경 사항 없음'); render(); } else alert('파일 형식이 올바르지 않습니다.');
+    }catch(err){ alert('파일 읽기 실패'); console.error(err); }
+  };
+  r.readAsText(f); e.target.value='';
+});
+
+/* Smooth animation: start => Day1 */
+function animateToDay1(){
+  currentDay = 1;
+  render();
+  scrollToDayHeader();
+}
+function scrollToDayHeader(){
+  const dh = document.querySelector('.day-header');
+  if(!dh) return;
+  const top = dh.getBoundingClientRect().top + window.scrollY - 12;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+/* start button */
+startPlanBtn.addEventListener('click', (e)=> { e.preventDefault(); animateToDay1(); });
+
+/* gesture: touch swipe up / wheel detect at top */
+let touchStartY = null;
+window.addEventListener('touchstart', e => { if(e.touches && e.touches[0]) touchStartY = e.touches[0].clientY; }, {passive:true});
+window.addEventListener('touchmove', e => {
+  if(touchStartY === null) return;
+  const y = e.touches[0].clientY; const dy = touchStartY - y;
+  if(window.scrollY <= 40 && dy > 140) { touchStartY = null; animateToDay1(); }
+}, {passive:true});
+window.addEventListener('touchend', ()=> { touchStartY = null; });
+
+let wheelCooldown = false;
+window.addEventListener('wheel', e => {
+  if(window.scrollY <= 40 && e.deltaY > 80 && !wheelCooldown){ wheelCooldown = true; animateToDay1(); setTimeout(()=> wheelCooldown=false, 1200); }
+}, {passive:true});
+
+// initial render
+render();
+setStatus('변경 사항 없음');
+window.scrollTo({ top: 0, behavior: 'auto' });
+
+</script>
+</body>
+</html>
