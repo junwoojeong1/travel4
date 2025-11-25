@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>오사카 여행 — 성인 준우의 첫 여행</title>
+
+<!-- 폰트 -->
+<style>
+@font-face { font-family: 'FlightSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/FlightSans-Bold.woff2') format('woff2'); font-weight:700; font-display:swap;}
+@font-face { font-family: 'GMarketSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight:500; font-display:swap;}
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+
+:root{
+  --bg-dark:#0b0f13; --muted:#98a0aa; --accent:#1fb3ff; --accent-2:#2bd4ff; --accent-warm:#ff8c42;
+  --max-mobile:420px; --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg-dark);color:#e6f0ff;font-family:'Wanted Sans','WantedSansVariable', "Noto Sans KR", system-ui,-apple-system;}
+.container{margin:0 auto;width:100%;max-width:var(--max-mobile);min-height:100vh;display:flex;flex-direction:column;padding-bottom:calc(112px + env(safe-area-inset-bottom));overflow-x:hidden}
+
+/* HERO */
+.hero{position:relative;width:100%;height:50vw;min-height:300px;overflow:hidden;border-bottom-left-radius:18px;border-bottom-right-radius:18px;margin-top:10px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+.hero iframe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;border:0;pointer-events:none;filter:brightness(0.45) contrast(0.98);z-index:0}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(6,12,20,0.08), rgba(6,12,20,0.40))}
+
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:18px}
+.subtitle{font-family:'GMarketSans',sans-serif;font-weight:500;color:rgba(255,255,255,0.92);font-size:0.95rem;background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;margin-bottom:10px}
+.title{font-family:'FlightSans','FlightSans-Bold',sans-serif;font-size:2.6rem;font-weight:700;color:#fff;text-shadow:0 12px 36px rgba(10,16,30,0.6);margin:0}
+.dates{margin-top:12px;background:rgba(255,255,255,0.04);padding:8px 14px;border-radius:12px;color:var(--muted);font-weight:700}
+.hero-cta{margin-top:22px;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202b;padding:12px 18px;border-radius:999px;font-weight:900;border:0;cursor:pointer;box-shadow:0 10px 30px rgba(31,179,255,0.14)}
+
+/* Day header */
+.day-header{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 6px;margin-top:14px;position:relative}
+.day-arrow{position:absolute;left:8px;top:50%;transform:translateY(-50%);opacity:0.92}
+.day-arrow.right{left:auto;right:8px}
+.day-title{font-weight:900;font-size:1.12rem;color:#eaf6ff}
+.day-sub{font-size:0.82rem;color:var(--muted);font-weight:700;margin-top:2px}
+
+/* add button */
+.add-btn{display:block;margin:8px auto;border-radius:12px;background:linear-gradient(90deg,#2ec2ff,#1fb3ff);padding:12px 18px;color:#01202b;font-weight:900;text-align:center;min-width:220px;box-shadow:0 10px 30px rgba(31,179,255,0.12);cursor:pointer;border:0}
+
+/* empty card */
+.card-empty{margin-top:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:14px;padding:28px 22px;text-align:center;box-shadow:0 18px 48px rgba(2,6,12,0.6);border:1px solid rgba(255,255,255,0.02)}
+.card-empty h3{font-size:1.15rem;margin:8px 0 4px 0}
+.card-empty p{color:var(--muted);margin:6px 0 14px 0}
+
+/* places */
+.places{margin-top:14px;display:flex;flex-direction:column;gap:12px;padding-bottom:16px}
+.place{background: linear-gradient(180deg, rgba(12,16,20,0.6), rgba(12,16,20,0.5));border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px}
+.place-summary{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.place-left{display:flex;gap:12px;align-items:center;min-width:0;flex:1}
+.place-name{font-weight:900;color:#e9f6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.place-type{color:var(--muted);font-weight:800;font-size:0.9rem}
+.badge{background:linear-gradient(90deg,var(--accent-2),var(--accent));padding:8px 10px;border-radius:10px;font-weight:900;color:#01202b;min-width:44px;text-align:center}
+.place-detail{display:none;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.03);gap:10px}
+.place.open .place-detail{display:flex}
+.input, textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e8f6ff}
+.row{display:flex;gap:10px;align-items:center}
+.row .label{min-width:70px;font-weight:800;color:var(--muted)}
+.range{flex:1}
+.small-actions{display:flex;gap:8px;align-items:center}
+.day-sep{height:1px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));margin:10px 0;border-radius:2px}
+
+/* bottom bar */
+.bottom-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:200;width:100%;max-width:var(--max-mobile);padding:12px calc(14px + env(safe-area-inset-left)) calc(12px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-right));display:flex;gap:10px;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(6,10,16,0.92), rgba(6,10,16,0.98));border-top:1px solid rgba(255,255,255,0.02)}
+.save-btn{background:linear-gradient(90deg,var(--accent-2),var(--accent));padding:12px 18px;border-radius:12px;border:0;font-weight:900;color:#01202b;cursor:pointer;min-width:110px}
+.export-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:800;cursor:pointer}
+.import-label{background:transparent;border:1px dashed rgba(255,255,255,0.04);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:800;cursor:pointer}
+
+/* small responsive */
+@media(min-width:900px){ .container{max-width:960px} .title{font-size:3.4rem} .hero{height:56vh;border-radius:20px} }
+</style>
+</head>
+<body>
+  <div class="container" id="app">
+    <!-- HERO -->
+    <header class="hero" role="banner" aria-label="오사카 야경">
+      <iframe id="bgVideo" src="https://www.youtube.com/embed/G5RpJwCJDqc?autoplay=1&mute=1&controls=0&loop=1&playlist=G5RpJwCJDqc&modestbranding=1&playsinline=1" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+      <div class="hero-inner">
+        <div class="subtitle">성인 준우의 첫 여행</div>
+        <h1 class="title">오사카 여행</h1>
+        <div class="dates">2025.12.6. — 2025.12.13</div>
+        <button class="hero-cta" id="startPlanBtn">여행 시작하기 →</button>
+        <div class="hero-sub" style="margin-top:14px;color:rgba(255,255,255,0.78)">9일간의 특별한 여정을 직관적으로 계획해보세요</div>
+      </div>
+    </header>
+
+    <!-- Day header -->
+    <div class="day-header" role="navigation" aria-label="Day navigation">
+      <button class="day-arrow" id="prevDay">◀</button>
+      <div style="text-align:center">
+        <div class="day-title" id="dayTitle">Day 1</div>
+        <div class="day-sub" id="dayDate">12월 6일</div>
+      </div>
+      <button class="day-arrow right" id="nextDay">▶</button>
+    </div>
+
+    <button class="add-btn" id="addTopBtn">＋ 장소 추가하기</button>
+
+    <main>
+      <section class="day-card">
+        <div id="placesRoot">
+          <div class="card-empty" id="emptyCard" style="display:none">
+            <div style="width:72px;height:72px;margin:0 auto;border-radius:50%;background:rgba(31,179,255,0.06);display:flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#1fb3ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>장소가 없습니다</h3>
+            <p>첫 장소를 추가해보세요 ✨</p>
+            <button class="small-add" id="emptyAddBtn">＋ 장소 추가하기</button>
+          </div>
+
+          <div class="places" id="placesList"></div>
+        </div>
+      </section>
+    </main>
+
+    <button class="add-btn" id="addBottomBtn" style="margin-bottom:16px">＋ 장소 추가하기</button>
+
+    <footer style="text-align:center;color:var(--muted);padding:10px 0 60px 0;font-weight:700">저장: 로컬 · GitHub Pages 배포 가능</footer>
+  </div>
+
+  <!-- bottom bar -->
+  <div class="bottom-bar" role="region" aria-label="하단 바">
+    <button id="saveBtn" class="save-btn" title="현재 Day 저장">저장</button>
+    <button id="exportBtn" class="export-btn">내보내기 (JSON)</button>
+    <label class="import-label">불러오기 <input id="importFile" type="file" accept="application/json" style="display:none"></label>
+    <div style="width:8px"></div>
+    <div id="statusText" style="color:var(--muted);font-weight:800">변경 사항 없음</div>
+  </div>
+
+<script>
+/* App JS: 이동시간 카테고리(30/60/120/240) 추가, 저장/내보내기/불러오기 유지, 레이아웃 유지 */
+const DAYS = 9;
+let currentDay = 1;
+const dayDates = ['12월 6일','12월 7일','12월 8일','12월 9일','12월 10일','12월 11일','12월 12일','12월 13일','12월 14일'];
+
+const dayTitle = document.getElementById('dayTitle');
+const dayDate = document.getElementById('dayDate');
+const prevDay = document.getElementById('prevDay');
+const nextDay = document.getElementById('nextDay');
+const addTopBtn = document.getElementById('addTopBtn');
+const addBottomBtn = document.getElementById('addBottomBtn');
+const emptyAddBtn = document.getElementById('emptyAddBtn');
+const placesList = document.getElementById('placesList');
+const emptyCard = document.getElementById('emptyCard');
+const saveBtn = document.getElementById('saveBtn');
+const exportBtn = document.getElementById('exportBtn');
+const importFile = document.getElementById('importFile');
+const statusText = document.getElementById('statusText');
+
+function storageKey(d){ return 'osaka_day_' + d; }
+function loadDay(d){
+  const raw = localStorage.getItem(storageKey(d));
+  if(!raw) return { places: [] };
+  try{ return JSON.parse(raw); } catch(e){ return { places: [] }; }
+}
+function saveDay(data, d){
+  localStorage.setItem(storageKey(d), JSON.stringify(data));
+  setStatus('저장됨');
+}
+function setStatus(txt){
+  statusText.textContent = txt;
+  if(txt === '변경 사항 없음') saveBtn.classList.remove('active');
+  else saveBtn.classList.add('active');
+}
+
+/* travel time category map (value stored as minutes or empty string) */
+const travelOptions = [
+  {val:'', label:'미지정'},
+  {val:'30', label:'30분 이하'},
+  {val:'60', label:'1시간 이하'},
+  {val:'120', label:'2시간 이하'},
+  {val:'240', label:'2시간 이상'}
+];
+
+function newPlace(){
+  return { id:'p_'+Date.now()+Math.floor(Math.random()*1000), name:'', type:'', location:3, price:3, charm:3, memo:'', moveToNext:'', /* moveToNext stores '30','60','120','240' or '' */ };
+}
+
+/* Render function */
+function render(){
+  const data = loadDay(currentDay);
+  dayTitle.textContent = 'Day ' + currentDay;
+  dayDate.textContent = dayDates[currentDay-1] || '';
+
+  placesList.innerHTML = '';
+  if(!data.places || data.places.length === 0){
+    emptyCard.style.display = 'block';
+  } else {
+    emptyCard.style.display = 'none';
+
+    // restaurant detection for lunch/dinner tagging
+    const restIdx = data.places.map((p,i)=>({p,i})).filter(x=>{
+      const t = (x.p.type||'').toLowerCase();
+      return t.includes('음식') || t.includes('식당') || t.includes('restaurant') || t.includes('food') || t.includes('카페');
+    }).map(x=>x.i);
+    const lunchIdx = restIdx[0] ?? -1;
+    const dinnerIdx = restIdx[1] ?? -1;
+
+    data.places.forEach((p, idx) => {
+      const el = document.createElement('div'); el.className='place'; el.dataset.id = p.id;
+      const sum = document.createElement('div'); sum.className='place-summary';
+      const left = document.createElement('div'); left.className='place-left';
+      const badge = document.createElement('div'); badge.className='badge'; badge.textContent = p.charm || 3;
+      const info = document.createElement('div');
+      const name = document.createElement('div'); name.className='place-name'; name.textContent = p.name || '무제 장소';
+      const type = document.createElement('div'); type.className='place-type'; type.textContent = p.type || '종류 미지정';
+      info.appendChild(name); info.appendChild(type);
+      left.appendChild(badge); left.appendChild(info);
+
+      const right = document.createElement('div'); right.style.display='flex'; right.style.alignItems='center';
+      const dot = document.createElement('div'); dot.className='chev'; dot.textContent = '⋯';
+      right.appendChild(dot);
+      sum.appendChild(left); sum.appendChild(right);
+
+      const detail = document.createElement('div'); detail.className='place-detail';
+      const inputName = document.createElement('input'); inputName.className='input'; inputName.placeholder='장소명'; inputName.value = p.name || '';
+      const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='장소 종류 (예: 음식점, 디저트, 관광지)'; inputType.value = p.type || '';
+      const rowLoc = document.createElement('div'); rowLoc.className='row';
+      const labelLoc = document.createElement('div'); labelLoc.className='label'; labelLoc.textContent = '위치';
+      const rangeLoc = document.createElement('input'); rangeLoc.type='range'; rangeLoc.min=1; rangeLoc.max=5; rangeLoc.value=p.location || 3; rangeLoc.className='range';
+      const rowPrice = document.createElement('div'); rowPrice.className='row';
+      const labelPrice = document.createElement('div'); labelPrice.className='label'; labelPrice.textContent='가격';
+      const rangePrice = document.createElement('input'); rangePrice.type='range'; rangePrice.min=1; rangePrice.max=5; rangePrice.value=p.price || 3; rangePrice.className='range';
+      const rowCharm = document.createElement('div'); rowCharm.className='row';
+      const labelCharm = document.createElement('div'); labelCharm.className='label'; labelCharm.textContent='종합 매력';
+      const rangeCharm = document.createElement('input'); rangeCharm.type='range'; rangeCharm.min=1; rangeCharm.max=5; rangeCharm.value=p.charm || 3; rangeCharm.className='range';
+      const memo = document.createElement('textarea'); memo.className='input'; memo.placeholder='기타 메모'; memo.value = p.memo || '';
+
+      // change: travel time select
+      const moveRow = document.createElement('div'); moveRow.className='row';
+      const moveLabel = document.createElement('div'); moveLabel.className='label'; moveLabel.textContent = '이동시간';
+      const moveSelect = document.createElement('select'); moveSelect.className='input';
+      travelOptions.forEach(opt => {
+        const o = document.createElement('option'); o.value = opt.val; o.textContent = opt.label; if(String(opt.val) === String(p.moveToNext)) o.selected = true;
+        moveSelect.appendChild(o);
+      });
+
+      moveRow.appendChild(moveLabel); moveRow.appendChild(moveSelect);
+
+      const actions = document.createElement('div'); actions.className='small-actions';
+      const deleteBtn = document.createElement('button'); deleteBtn.textContent='삭제';
+      const upBtn = document.createElement('button'); upBtn.textContent='▲';
+      const downBtn = document.createElement('button'); downBtn.textContent='▼';
+      actions.appendChild(deleteBtn); actions.appendChild(upBtn); actions.appendChild(downBtn);
+
+      detail.appendChild(inputName); detail.appendChild(inputType);
+      rowLoc.appendChild(labelLoc); rowLoc.appendChild(rangeLoc);
+      rowPrice.appendChild(labelPrice); rowPrice.appendChild(rangePrice);
+      rowCharm.appendChild(labelCharm); rowCharm.appendChild(rangeCharm);
+      detail.appendChild(rowLoc); detail.appendChild(rowPrice); detail.appendChild(rowCharm);
+      detail.appendChild(memo); detail.appendChild(moveRow); detail.appendChild(actions);
+
+      // summary toggle
+      sum.addEventListener('click', ()=> {
+        const opened = el.classList.toggle('open');
+        if(opened) el.scrollIntoView({behavior:'smooth',block:'center'});
+      });
+
+      // mark dirty on change
+      [inputName,inputType,rangeLoc,rangePrice,rangeCharm,memo,moveSelect].forEach(inp=>{
+        inp.addEventListener('input', ()=> { el.dataset.dirty='1'; setStatus('저장 필요 — 변경 사항 있음'); });
+        moveSelect.addEventListener('change', ()=> { el.dataset.dirty='1'; setStatus('저장 필요 — 변경 사항 있음'); });
+      });
+
+      // delete / up / down
+      deleteBtn.addEventListener('click', ()=> {
+        if(!confirm('삭제하시겠습니까?')) return;
+        const d = loadDay(currentDay);
+        d.places = d.places.filter(x=>x.id !== p.id);
+        saveDay(d,currentDay); setStatus('변경 사항 없음'); render();
+      });
+      upBtn.addEventListener('click', ()=>{
+        const d = loadDay(currentDay);
+        const idx = d.places.findIndex(x=>x.id===p.id);
+        if(idx>0){ const it = d.places.splice(idx,1)[0]; d.places.splice(idx-1,0,it); saveDay(d,currentDay); render(); }
+      });
+      downBtn.addEventListener('click', ()=>{
+        const d = loadDay(currentDay);
+        const idx = d.places.findIndex(x=>x.id===p.id);
+        if(idx>=0 && idx < d.places.length-1){ const it = d.places.splice(idx,1)[0]; d.places.splice(idx+1,0,it); saveDay(d,currentDay); render(); }
+      });
+
+      el.appendChild(sum); el.appendChild(detail);
+      placesList.appendChild(el);
+
+      // lunch/dinner tag
+      if(idx === lunchIdx || idx === dinnerIdx){
+        const tag = document.createElement('div'); tag.className='place-type'; tag.style.color='#ffd7b2'; tag.style.fontWeight='900';
+        tag.style.marginLeft='8px'; tag.textContent = idx === lunchIdx ? '점심' : (idx === dinnerIdx ? '저녁' : '');
+        left.appendChild(tag);
+      }
+
+      // short move label in summary (right side)
+      const shortMove = document.createElement('div'); shortMove.style.fontSize='0.86rem'; shortMove.style.color='var(--muted)';
+      const mv = p.moveToNext || '';
+      const label = travelOptions.find(o=>o.val===mv)?.label || '';
+      if(label) shortMove.textContent = `이동: ${label}`;
+      sum.appendChild(shortMove);
+    });
+  }
+}
+
+/* Add place handlers */
+function addPlace(atTop=false){
+  const d = loadDay(currentDay);
+  const p = newPlace();
+  if(!d.places) d.places = [];
+  if(atTop) d.places.unshift(p); else d.places.push(p);
+  saveDay(d,currentDay); setStatus('저장됨'); render();
+}
+addTopBtn.addEventListener('click', ()=> addPlace(true));
+addBottomBtn.addEventListener('click', ()=> addPlace(false));
+if(emptyAddBtn) emptyAddBtn.addEventListener('click', ()=> addPlace(false));
+
+/* Day navigation */
+prevDay.addEventListener('click', ()=> { if(currentDay>1) currentDay--; render(); });
+nextDay.addEventListener('click', ()=> { if(currentDay < DAYS) currentDay++; render(); });
+
+/* Global save: read DOM and persist currentDay */
+saveBtn.addEventListener('click', ()=> {
+  const placeEls = document.querySelectorAll('.place');
+  const places = [];
+  placeEls.forEach(el=>{
+    const id = el.dataset.id;
+    const name = el.querySelector('input[type="text"]') ? el.querySelector('input[type="text"]').value.trim() : '';
+    // second text input is type
+    const types = el.querySelectorAll('input[type="text"]');
+    const typeVal = types[1] ? types[1].value.trim() : '';
+    const ranges = el.querySelectorAll('input[type="range"]');
+    const loc = ranges[0] ? Number(ranges[0].value) : 3;
+    const price = ranges[1] ? Number(ranges[1].value) : 3;
+    const charm = ranges[2] ? Number(ranges[2].value) : 3;
+    const memo = el.querySelector('textarea') ? el.querySelector('textarea').value : '';
+    const moveSel = el.querySelector('select') ? el.querySelector('select').value : '';
+    places.push({ id, name, type: typeVal, location: loc, price: price, charm: charm, memo: memo, moveToNext: moveSel });
+  });
+  saveDay({ places }, currentDay);
+  setStatus('변경 사항 없음');
+  render();
+});
+
+/* Export / Import */
+exportBtn.addEventListener('click', ()=> {
+  const dump = {};
+  for(let i=1;i<=DAYS;i++) dump['Day'+i] = loadDay(i);
+  const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'osaka_trip_export.json'; a.click(); URL.revokeObjectURL(url);
+});
+
+importFile.addEventListener('change', (e)=> {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = (ev) => {
+    try{
+      const obj = JSON.parse(ev.target.result);
+      let found = false;
+      for(let i=1;i<=DAYS;i++){
+        if(obj['Day'+i]){ saveDay(obj['Day'+i], i); found = true; }
+      }
+      if(!found && Array.isArray(obj.places)){ saveDay({places: obj.places}, currentDay); found = true; }
+      if(found){ alert('불러오기 완료'); render(); setStatus('변경 사항 없음'); } else alert('파일 형식이 올바르지 않습니다.');
+    }catch(err){ alert('파일 읽기 실패'); console.error(err); }
+  };
+  r.readAsText(f);
+  e.target.value = '';
+});
+
+/* initial ensure days exist */
+for(let i=1;i<=DAYS;i++){ if(!localStorage.getItem(storageKey(i))) saveDay({places:[]}, i); }
+render(); setStatus('변경 사항 없음');
+
+</script>
+</body>
+</html>
