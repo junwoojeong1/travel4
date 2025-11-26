@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>오사카 여행 — (KAL 스타일 리디자인, 모바일 개선판)</title>
+<title>오사카 여행 — (KAL 스타일 리디자인, 체류시간 추가)</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -65,7 +65,6 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-famil
   .card{page-break-inside:avoid;break-inside:avoid;margin:0 0 12px 0;border:0;padding:8px}
   .map-frame, .sidebar { display:none }
   .places-area{width:100%}
-  /* cover page inserted by print script */
 }
 </style>
 </head>
@@ -123,6 +122,13 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-famil
               <select id="filterMove2" style="flex:1;padding:8px;border-radius:8px"><option value="">전체</option><option value="30">30분 이하</option><option value="60">1시간 이하</option></select>
             </div>
           </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(5,33,43,0.04)">
+          <div>
+            <h4 class="small">총 체류시간</h4>
+            <div id="totalTimeDisplay" class="small">전체: 0분</div>
+            <div id="dayTimeDisplay" class="small" style="margin-top:6px">선택된 날짜: —</div>
+          </div>
         </div>
       </div>
     </section>
@@ -165,10 +171,9 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-famil
 
 <script>
 /* 변경 요약:
-   - 항공(출발지/도착지) 입력 제거
-   - 모바일 UX: FAB 추가, 버튼/터치타겟 증대
-   - 가격 입력: 슬라이더 대신 숫자 입력으로 변경 (detail에 직접 입력)
-   - 인쇄: printBtn 클릭 시 새로운 창으로 포맷된 인쇄용 HTML을 생성하여 인쇄
+   - 장소별 체류시간(stayTime, 분) 입력 필드 추가
+   - 요약 패널에 전체/선택 날짜별 총 체류시간 표시
+   - 인쇄 레이아웃에 체류시간 포함
 */
 
 const TOTAL_DAYS = 9;
@@ -194,6 +199,8 @@ const dayTitle = document.getElementById('dayTitle');
 const dayDate = document.getElementById('dayDate');
 const mapPreview = document.getElementById('mapPreview');
 const mobileFab = document.getElementById('mobileFab');
+const totalTimeDisplay = document.getElementById('totalTimeDisplay');
+const dayTimeDisplay = document.getElementById('dayTimeDisplay');
 
 function storageKey(d){ return 'osaka_day_' + d; }
 for(let i=1;i<=TOTAL_DAYS;i++){
@@ -204,10 +211,23 @@ function saveDay(data, d){ if(d < 1 || d > TOTAL_DAYS) return; localStorage.setI
 function findPlaceDay(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); if((day.places||[]).some(p=>p.id===placeId)) return d; } return null; }
 function getPlaceFromDay(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const p = (day.places||[]).find(x=>x.id===placeId); if(p) return {day:d, place: p}; } return null; }
 function getAllPlaces(){ const all = []; for(let d=1; d<=TOTAL_DAYS; d++){ (loadDay(d).places || []).forEach(p => all.push({...p, _day: d})); } return all; }
-function newPlace(){ return { id: 'p_' + Date.now() + Math.floor(Math.random()*1000), name:'무제 장소', type:'', location:3, price:0, charm:3, memo:'', moveToNext:'', labels:[], image: '' }; }
+function newPlace(){ return { id: 'p_' + Date.now() + Math.floor(Math.random()*1000), name:'무제 장소', type:'', location:3, price:0, charm:3, memo:'', moveToNext:'', labels:[], image: '', stayTime: 0 }; }
 function setStatus(txt){ statusText.textContent = txt; if(txt === '변경 사항 없음') saveBtn.classList.remove('active'); else saveBtn.classList.add('active'); }
 
 function rebuildFilterOptions(){ const all = getAllPlaces(); const types = Array.from(new Set(all.map(p => (p.type||'').trim()).filter(Boolean))).sort(); filterType.innerHTML = '<option value="">전체</option>'; types.forEach(t => { const o=document.createElement('option'); o.value=t; o.textContent=t; filterType.appendChild(o); }); const allLabels = new Set(RECOMMENDED_LABELS); all.forEach(p => (p.labels||[]).forEach(l=>allLabels.add(l))); filterTag.innerHTML = '<option value="">전체</option>'; Array.from(allLabels).sort().forEach(l => { const o=document.createElement('option'); o.value=l; o.textContent=l; filterTag.appendChild(o); }); }
+
+function formatMinutes(m){ m = Number(m) || 0; if(m <= 0) return '0분'; const h = Math.floor(m / 60); const mm = m % 60; if(h>0) return `${h}시간 ${mm}분`; return `${mm}분`; }
+
+function calculateTotals(){ // returns { totalAll: minutes, perDay: {1:mins,...} }
+  const perDay = {};
+  let totalAll = 0;
+  for(let d=1; d<=TOTAL_DAYS; d++){
+    const day = loadDay(d);
+    const mins = (day.places || []).reduce((acc,p)=> acc + (Number(p.stayTime) || 0), 0);
+    perDay[d] = mins; totalAll += mins;
+  }
+  return { totalAll, perDay };
+}
 
 // reorder helper
 function reorderPlacesWithinDay(dayIndex, fromIdx, toIdx){ const d = loadDay(dayIndex); if(!d || !d.places) return; const arr = d.places; const [item] = arr.splice(fromIdx,1); arr.splice(toIdx,0,item); saveDay(d, dayIndex); setStatus('저장됨 — 순서 변경'); render(); }
@@ -216,6 +236,10 @@ function render(){
   dayTitle.textContent = (currentDay === 0) ? '전체 일정' : 'Day ' + currentDay;
   if(dayDate) dayDate.textContent = (currentDay === 0) ? '전체' : '';
   rebuildFilterOptions();
+  const totals = calculateTotals();
+  totalTimeDisplay.textContent = '전체: ' + formatMinutes(totals.totalAll);
+  dayTimeDisplay.textContent = (currentDay===0) ? '선택된 날짜: 전체' : ('선택된 날짜: ' + formatMinutes(totals.perDay[currentDay] || 0));
+
   let items = (currentDay === 0) ? getAllPlaces() : (loadDay(currentDay).places || []).map(p => ({...p, _day: currentDay}));
 
   if(currentDay === 0){ const tfilter = filterType.value; const tagfilter = filterTag.value; const movefilter = filterMove.value; const q = (document.getElementById('globalSearch') && document.getElementById('globalSearch').value || '').trim().toLowerCase(); items = items.filter(p => { if(tfilter && ((p.type||'').toLowerCase() !== tfilter.toLowerCase())) return false; if(tagfilter && !(p.labels||[]).includes(tagfilter)) return false; if(movefilter && String(p.moveToNext || '') !== movefilter) return false; if(q){ const hay = ((p.name||'') + ' ' + (p.type||'') + ' ' + ((p.labels||[]).join(' '))).toLowerCase(); if(!hay.includes(q)) return false; } return true; }); if(sortCharm.value === 'desc') items.sort((a,b)=> (b.charm || 0) - (a.charm || 0)); if(sortCharm.value === 'asc') items.sort((a,b)=> (a.charm || 0) - (b.charm || 0)); }
@@ -244,12 +268,13 @@ function render(){
 
     const right = document.createElement('div'); right.style.display='flex'; right.style.flexDirection='column'; right.style.alignItems='flex-end'; right.style.minWidth='160px';
     const priceDisplay = document.createElement('div'); priceDisplay.className='small'; priceDisplay.textContent = '가격: ' + (p.price ? (p.price + '원') : '미정');
+    const timeDisplay = document.createElement('div'); timeDisplay.className='small'; timeDisplay.textContent = '체류: ' + formatMinutes(p.stayTime || 0);
     const chipsWrap = document.createElement('div'); chipsWrap.className='chips'; (p.labels||[]).forEach(lbl=>{ const c=document.createElement('div'); c.className='chip'; c.textContent=lbl; chipsWrap.appendChild(c); });
     const actions = document.createElement('div'); actions.className='controls';
     const openBtn = document.createElement('button'); openBtn.textContent='⋯'; openBtn.className='button';
     const gotoBtn = document.createElement('button'); gotoBtn.textContent='해당일로'; gotoBtn.className='button';
     actions.appendChild(openBtn); actions.appendChild(gotoBtn);
-    right.appendChild(priceDisplay); right.appendChild(chipsWrap); right.appendChild(actions);
+    right.appendChild(priceDisplay); right.appendChild(timeDisplay); right.appendChild(chipsWrap); right.appendChild(actions);
 
     el.appendChild(left); el.appendChild(right);
 
@@ -257,12 +282,19 @@ function render(){
     const detail = document.createElement('div'); detail.className='detail';
     const inputName = document.createElement('input'); inputName.className='input'; inputName.placeholder='장소명'; inputName.value = p.name || '';
     const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='종류'; inputType.value = p.type || '';
-    // price input (numeric) - replaces slider behavior
+    // price input (numeric)
     const priceRow = document.createElement('div'); priceRow.style.display='flex'; priceRow.style.gap='8px'; priceRow.style.alignItems='center'; priceRow.style.marginTop='8px';
     const priceLabel = document.createElement('div'); priceLabel.textContent='예상 가격(원)'; priceLabel.className='small';
     const priceInput = document.createElement('input'); priceInput.type='number'; priceInput.min='0'; priceInput.placeholder='0'; priceInput.value = p.price || 0; priceInput.style.padding='8px'; priceInput.style.borderRadius='8px'; priceInput.style.border='1px solid rgba(0,0,0,0.06)';
     priceInput.addEventListener('input', ()=> { immediateUpdate({price: Number(priceInput.value || 0)}); });
     priceRow.appendChild(priceLabel); priceRow.appendChild(priceInput);
+
+    // stay time input (minutes)
+    const stayRow = document.createElement('div'); stayRow.style.display='flex'; stayRow.style.gap='8px'; stayRow.style.alignItems='center'; stayRow.style.marginTop='8px';
+    const stayLabel = document.createElement('div'); stayLabel.textContent='체류시간(분)'; stayLabel.className='small';
+    const stayInput = document.createElement('input'); stayInput.type='number'; stayInput.min='0'; stayInput.placeholder='분'; stayInput.value = p.stayTime || 0; stayInput.style.padding='8px'; stayInput.style.borderRadius='8px'; stayInput.style.border='1px solid rgba(0,0,0,0.06)';
+    stayInput.addEventListener('input', ()=> { immediateUpdate({stayTime: Number(stayInput.value || 0)}); });
+    stayRow.appendChild(stayLabel); stayRow.appendChild(stayInput);
 
     const labelRow = document.createElement('div'); labelRow.style.display='flex'; labelRow.style.gap='8px'; labelRow.style.flexWrap='wrap'; labelRow.style.marginTop='8px'; RECOMMENDED_LABELS.forEach(lbl => { const btn = document.createElement('button'); btn.type='button'; btn.className='chip'; btn.textContent=lbl; if((p.labels||[]).includes(lbl)){ btn.style.background='linear-gradient(90deg,#00b0ff,#0077c8)'; btn.style.color='#012'; } btn.addEventListener('click', ()=> toggleLabel(p.id, lbl)); labelRow.appendChild(btn); });
     const addLabelBox = document.createElement('div'); addLabelBox.style.display='flex'; addLabelBox.style.gap='8px'; addLabelBox.style.marginTop='8px';
@@ -279,7 +311,7 @@ function render(){
 
     const delBtn = document.createElement('button'); delBtn.className='button export'; delBtn.textContent='삭제'; delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')) deletePlaceById(p.id); });
 
-    detail.appendChild(inputName); detail.appendChild(inputType); detail.appendChild(priceRow); detail.appendChild(labelRow); detail.appendChild(addLabelBox); detail.appendChild(imgRow); detail.appendChild(delBtn);
+    detail.appendChild(inputName); detail.appendChild(inputType); detail.appendChild(priceRow); detail.appendChild(stayRow); detail.appendChild(labelRow); detail.appendChild(addLabelBox); detail.appendChild(imgRow); detail.appendChild(delBtn);
 
     el.appendChild(detail);
 
@@ -342,7 +374,7 @@ startPlanBtn.addEventListener('click', ()=>{ currentDay = 1; render(); window.sc
 // mobile FAB
 if(mobileFab) mobileFab.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}); });
 
-// print: create a clean printable window with cover + per-day sections
+// print: create a clean printable window with cover + per-day sections (체류시간 포함)
 const printBtn = document.getElementById('printBtn'); if(printBtn) printBtn.addEventListener('click', ()=>{
   const win = window.open('','_blank');
   const title = document.querySelector('.hero h1') ? document.querySelector('.hero h1').textContent : '여행 일정';
@@ -353,11 +385,12 @@ const printBtn = document.getElementById('printBtn'); if(printBtn) printBtn.addE
   for(let d=1; d<=TOTAL_DAYS; d++){
     const day = loadDay(d);
     if(!day || !day.places || day.places.length===0) continue;
-    html += `<div class="day"><h2>Day ${d}</h2>`;
+    const dayTotal = (day.places||[]).reduce((acc,p)=> acc + (Number(p.stayTime)||0), 0);
+    html += `<div class="day"><h2>Day ${d} — 총 체류: ${formatMinutes(dayTotal)}</h2>`;
     day.places.forEach(p => {
       html += `<div class="place">`;
       html += `<img src="${p.image || 'https://via.placeholder.com/160x120?text=No+Image'}" alt="">`;
-      html += `<div class="meta"><h3>${p.name || '무제 장소'}</h3><p>종류: ${p.type || '미정'} · 가격: ${p.price ? p.price + '원' : '미정'}</p><p>${(p.labels||[]).join(', ')}</p></div>`;
+      html += `<div class="meta"><h3>${p.name || '무제 장소'}</h3><p>종류: ${p.type || '미정'} · 가격: ${p.price ? p.price + '원' : '미정'} · 체류: ${formatMinutes(p.stayTime || 0)}</p><p>${(p.labels||[]).join(', ')}</p></div>`;
       html += `</div>`;
     });
     html += `</div>`;
