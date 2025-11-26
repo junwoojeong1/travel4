@@ -3,175 +3,172 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>오사카 여행 — 성인 준우의 첫 여행</title>
-
+<title>오사카 여행 — (KAL 스타일 리디자인, 모바일 개선판)</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
 <style>
-@font-face { font-family: 'FlightSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/FlightSans-Bold.woff2') format('woff2'); font-weight:700; font-display:swap;}
-@font-face { font-family: 'GMarketSans'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight:500; font-display:swap;}
-@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
-
 :root{
-  --page-bg: #FAF9F6;
-  --text: #071428;
-  --muted: #6f7b84;
-  --card-bg: #ffffff;
-  --accent: #1ea6ff;
-  --accent-2: #28c7ff;
-  --chip-bg: rgba(30,166,255,0.08);
-  --max-mobile:420px;
-  --spacer-h: 110vh;
+  --bg:#f4fbff; --nav:#012a59; --accent:#0077c8; --accent-2:#00a4ff; --card:#fff; --muted:#6b7881; --text:#05212b; --radius:12px; --container:1200px;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--page-bg);color:var(--text);font-family:'Wanted Sans','WantedSansVariable', "Noto Sans KR", system-ui,-apple-system;-webkit-font-smoothing:antialiased}
-.container{margin:0 auto;width:100%;max-width:var(--max-mobile);min-height:100vh;display:flex;flex-direction:column;padding-bottom:calc(132px + env(safe-area-inset-bottom));overflow-x:hidden}
-
-/* Hero */
-.hero{position:relative;width:100%;height:52vw;min-height:320px;overflow:hidden;border-bottom-left-radius:18px;border-bottom-right-radius:18px;margin-top:10px;box-shadow:0 10px 30px rgba(10,14,20,0.06)}
-.hero iframe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;border:0;pointer-events:none;filter:contrast(0.95) brightness(0.78) saturate(1.05);z-index:0}
-.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(250,249,246,0.0), rgba(250,249,246,0.34));}
-.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:22px}
-.subtitle{font-family:'GMarketSans',sans-serif;font-weight:500;color:var(--text);background:rgba(255,255,255,0.88);padding:6px 10px;border-radius:999px;margin-bottom:10px;box-shadow:0 6px 18px rgba(10,14,20,0.04)}
-.title{font-family:'FlightSans','FlightSans-Bold',sans-serif;font-size:2.6rem;font-weight:700;color:var(--text);margin:0}
-.dates{margin-top:12px;background:rgba(7,20,30,0.03);padding:8px 14px;border-radius:12px;color:var(--muted);font-weight:700}
-.hero-cta{margin-top:22px;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202b;padding:12px 18px;border-radius:999px;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 40px rgba(30,166,255,0.14);transition:transform .12s;}
-.hero-cta:active{transform:translateY(2px) scale(.995);}
-
-/* spacer (gap between hero and day section) */
-.spacer{height:var(--spacer-h); width:100%;}
-
-/* day header */
-.day-header{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 6px;margin-top:18px;position:relative}
-.day-arrow{position:absolute;left:8px;top:50%;transform:translateY(-50%);opacity:0.92;background:transparent;border:0;color:var(--muted);font-size:1.1rem;padding:8px;border-radius:10px}
-.day-arrow.right{left:auto;right:8px}
-.day-title{font-weight:900;font-size:1.12rem;color:var(--text)}
-.day-sub{font-size:0.82rem;color:var(--muted);font-weight:700;margin-top:2px}
-
-/* add button */
-.add-btn{display:block;margin:8px auto;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:12px 18px;color:#01202b;font-weight:900;text-align:center;min-width:220px;box-shadow:0 10px 30px rgba(30,166,255,0.12);cursor:pointer;border:0;transition:transform .12s}
-.add-btn:active{transform:translateY(2px)}
-
-/* filter bar (Day0 only) */
-.filter-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:10px 6px;margin:8px 10px;border-radius:12px;background:rgba(255,255,255,0.85);box-shadow:0 6px 18px rgba(10,14,20,0.03)}
-.filter-bar select, .filter-bar input[type="text"]{padding:8px 10px;border-radius:10px;border:1px solid rgba(7,20,30,0.06);background:white;color:var(--text);font-weight:700}
-
-/* list / cards */
-.places{margin:14px;padding:0 10px 20px 10px;display:flex;flex-direction:column;gap:12px}
-.place{background:var(--card-bg);border-radius:12px;padding:12px;border:1px solid rgba(7,20,30,0.04);display:flex;flex-direction:column;gap:8px;transition:transform .12s, box-shadow .12s}
-.place:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(10,14,20,0.04)}
-.place-summary{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.place-left{display:flex;gap:12px;align-items:center;min-width:0;flex:1}
-.place-name{font-weight:900;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.place-type{color:var(--muted);font-weight:800;font-size:0.9rem}
-.badge{background:linear-gradient(90deg,var(--accent-2),var(--accent));padding:8px 10px;border-radius:10px;font-weight:900;color:#01202b;min-width:44px;text-align:center}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Noto Sans KR"}
+.header{background:linear-gradient(90deg,var(--nav),#0b5d89);color:white;padding:14px 18px;position:sticky;top:0;z-index:60;box-shadow:0 6px 18px rgba(3,30,50,0.12)}
+.header .inner{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900}
+.logo .mark{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:900;color:#012;font-size:1.05rem}
+.nav{display:flex;gap:14px;align-items:center}
+.nav a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:700}
+.searchbar{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.08);padding:8px;border-radius:999px}
+.searchbar input{border:0;background:transparent;color:white;padding:8px;outline:none;width:200px}
+.container{max-width:var(--container);margin:18px auto;padding:0 16px}
+.hero{background-image:linear-gradient(180deg,rgba(1,37,58,0.92), rgba(0,112,200,0.5)), url('https://images.unsplash.com/photo-1505765052422-6c1f2c3c27c4?auto=format&fit=crop&w=1400&q=80');background-size:cover;border-radius:12px;padding:28px;color:white;display:flex;align-items:center;gap:18px}
+.hero .left{flex:1}
+.hero h1{font-size:2.1rem;margin:6px 0 8px 0}
+.hero p{margin:0 0 12px 0;color:rgba(255,255,255,0.95);font-weight:500}
+.hero .cta{background:linear-gradient(90deg,var(--accent-2),var(--accent));padding:10px 16px;border-radius:999px;font-weight:900;border:none;cursor:pointer}
+.layout{display:grid;grid-template-columns:300px 1fr 420px;gap:16px;margin-top:16px}
+.sidebar{background:var(--card);border-radius:var(--radius);padding:12px;border:1px solid rgba(5,33,43,0.06)}
+.places-area{background:transparent}
+.card{background:var(--card);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(5,33,43,0.06);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card .meta{display:flex;gap:10px;align-items:center}
+.badge{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:8px 10px;border-radius:10px;color:#012;font-weight:900}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{background:var(--chip-bg);color:var(--text);font-weight:800;padding:6px 8px;border-radius:999px;font-size:0.78rem;border:1px solid rgba(30,166,255,0.12)}
-
-/* detail animation */
-.place-detail{ display:block; max-height:0; overflow:hidden; opacity:0; transition: max-height .28s cubic-bezier(.2,.9,.2,1), opacity .18s ease; padding-top:0; margin-top:0; border-top:none;}
-.place.open .place-detail{ max-height:520px; opacity:1; padding-top:10px; margin-top:10px; border-top:1px dashed rgba(7,20,30,0.04);}
-
-/* inputs */
-.input, textarea, select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(7,20,30,0.06);background:transparent;color:var(--text)}
-.row{display:flex;gap:10px;align-items:center}
-.row .label{min-width:70px;font-weight:800;color:var(--muted)}
-.range{flex:1}
-.small-actions{display:flex;gap:8px;align-items:center}
-
-/* bottom bar */
-.bottom-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:200;width:100%;max-width:var(--max-mobile);padding:12px calc(14px + env(safe-area-inset-left)) calc(12px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-right));display:flex;gap:10px;align-items:center;justify-content:center;background:transparent}
-.save-btn{background:linear-gradient(90deg,var(--accent-2),var(--accent));padding:12px 18px;border-radius:12px;border:0;font-weight:900;color:#01202b;cursor:pointer;min-width:110px}
-.export-btn{background:white;border:1px solid rgba(7,20,30,0.06);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:800;cursor:pointer}
-.import-label{background:white;border:1px dashed rgba(7,20,30,0.06);padding:10px 12px;border-radius:12px;color:var(--muted);font-weight:800;cursor:pointer}
-
-html { scroll-behavior: smooth; }
-@media(min-width:900px){ .container{max-width:960px} .title{font-size:3.4rem} .hero{height:56vh;border-radius:20px} }
+.chip{background:rgba(0,176,255,0.09);padding:6px 8px;border-radius:999px;font-weight:700;color:var(--nav)}
+.detail{margin-top:8px;border-top:1px dashed rgba(5,33,43,0.04);padding-top:10px;display:none}
+.place.open .detail{display:block}
+.controls{display:flex;gap:8px}
+.small{font-size:0.85rem;color:var(--muted)}
+.bottom-fixed{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:calc(100% - 40px);max-width:var(--container);display:flex;justify-content:center;gap:8px;z-index:80}
+.button{padding:10px 14px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
+.save{background:linear-gradient(90deg,var(--accent-2),var(--accent));color:#012}
+.export{background:white;border:1px solid rgba(5,33,43,0.06)}
+.map-frame{background:linear-gradient(180deg,#eaf7ff,#ffffff);border-radius:12px;padding:12px;height:420px;border:1px solid rgba(5,33,43,0.04)}
+.place-thumb{width:84px;height:64px;border-radius:8px;object-fit:cover;border:1px solid rgba(0,0,0,0.06)}
+.fab{position:fixed;right:16px;bottom:90px;width:64px;height:64px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;color:#012;font-weight:900;box-shadow:0 8px 24px rgba(3,30,50,0.18);z-index:100}
+.drag-hint{opacity:0.6;font-size:0.85rem}
+@media(max-width:1100px){ .layout{grid-template-columns:1fr 480px;} .map-frame{display:none} }
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;gap:12px}
+  .sidebar{order:2}
+  .hero{flex-direction:column;padding:18px}
+  .searchbar input{width:120px}
+  .bottom-fixed{display:none}
+  .fab{display:flex}
+  .card{padding:14px}
+  .place-thumb{width:72px;height:56px}
+  .button{padding:14px 18px;font-size:1rem}
+}
+/* print styles */
+@media print{
+  body{background:white;color:#05212b}
+  .header, .bottom-fixed, .controls, .nav, .searchbar, .fab { display:none !important }
+  .card{page-break-inside:avoid;break-inside:avoid;margin:0 0 12px 0;border:0;padding:8px}
+  .map-frame, .sidebar { display:none }
+  .places-area{width:100%}
+  /* cover page inserted by print script */
+}
 </style>
 </head>
 <body>
-  <div class="container" id="app">
-    <!-- HERO -->
-    <header class="hero" id="hero" role="banner" aria-label="오사카 야경">
-      <iframe id="bgVideo" src="https://www.youtube.com/embed/G5RpJwCJDqc?autoplay=1&mute=1&controls=0&loop=1&playlist=G5RpJwCJDqc&modestbranding=1&playsinline=1" allow="autoplay; fullscreen; picture-in-picture"></iframe>
-      <div class="hero-inner">
-        <div class="subtitle">성인 준우의 첫 여행</div>
-        <h1 class="title">오사카 여행</h1>
-        <div class="dates">2025.12.6. — 2025.12.13</div>
-        <button class="hero-cta" id="startPlanBtn">여행 시작하기 →</button>
+  <header class="header">
+    <div class="inner">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo">
+          <div class="mark">OS</div>
+          <div style="line-height:1">오사카 플래너<br><span style="font-weight:600;font-size:0.92rem;opacity:0.95">성인 준우의 첫 여행</span></div>
+        </div>
       </div>
-    </header>
-
-    <!-- spacer between hero & day -->
-    <div class="spacer" id="spacer"></div>
-
-    <!-- Day header -->
-    <div class="day-header" role="navigation" aria-label="Day navigation">
-      <button class="day-arrow" id="prevDay">◀</button>
-      <div style="text-align:center">
-        <div class="day-title" id="dayTitle">전체 일정</div>
-      </div>
-      <button class="day-arrow right" id="nextDay">▶</button>
-    </div>
-
-    <button class="add-btn" id="addTopBtn">＋ 장소 추가하기</button>
-
-    <!-- Day0 filter (only visible on Day0) -->
-    <div id="filterBarContainer" style="margin:8px">
-      <div class="filter-bar" id="filterBar">
-        <div class="small">종류</div>
-        <select id="filterType"><option value="">전체</option></select>
-
-        <div class="small">태그</div>
-        <select id="filterTag"><option value="">전체</option></select>
-
-        <div class="small">매력 정렬</div>
-        <select id="sortCharm"><option value="none">기본</option><option value="desc">높은순</option><option value="asc">낮은순</option></select>
-
-        <div class="small">이동시간</div>
-        <select id="filterMove"><option value="">전체</option><option value="30">30분 이하</option><option value="60">1시간 이하</option><option value="120">2시간 이하</option><option value="240">2시간 이상</option></select>
-
-        <div class="small">검색</div>
-        <input id="searchTxt" type="text" placeholder="이름 / 종류 / 라벨로 검색" />
-
-        <button id="clearFilters" style="padding:8px 10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#01202B;font-weight:900;cursor:pointer">초기화</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <nav class="nav">
+          <a href="#">일정</a>
+          <a href="#">지도</a>
+          <a href="#">저장</a>
+        </nav>
+        <div class="searchbar"><input id="globalSearch" placeholder="이름 / 종류 / 라벨로 검색" /><button id="globalSearchBtn" class="button">검색</button></div>
       </div>
     </div>
+  </header>
 
-    <main>
-      <section class="day-card">
-        <div id="placesRoot">
-          <div class="card-empty" id="emptyCard" style="display:none">
-            <div style="width:72px;height:72px;margin:0 auto;border-radius:50%;background:rgba(30,166,255,0.06);display:flex;align-items:center;justify-content:center;">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#1fb3ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3>장소가 없습니다</h3>
-            <p>첫 장소를 추가해보세요 ✨</p>
-            <button class="small-add" id="emptyAddBtn">＋ 장소 추가하기</button>
+  <main class="container">
+    <section class="hero">
+      <div class="left">
+        <div style="font-weight:700;opacity:0.95">오사카 · 2025.12.6 — 2025.12.13</div>
+        <h1>성인 준우의 첫 여행</h1>
+        <p>대한항공 느낌의 넓고 깔끔한 레이아웃 — 항공 관련 요소는 제거되었습니다. 모바일 UX와 인쇄(PDF) 레이아웃이 개선되었습니다.</p>
+        <div style="display:flex;gap:12px">
+          <button id="startPlanBtn2" class="cta">여행 시작하기</button>
+          <button id="openAll" class="button" style="background:white">전체 보기</button>
+        </div>
+      </div>
+      <div style="width:320px">
+        <div class="sidebar">
+          <h3>Day 내비게이션</h3>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
+            <button class="button" id="prevDay2">◀</button>
+            <div style="flex:1;text-align:center"><strong id="dayTitle">전체 일정</strong><div id="dayDate" class="small">전체</div></div>
+            <button class="button" id="nextDay2">▶</button>
           </div>
 
-          <div class="places" id="placesList"></div>
+          <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(5,33,43,0.04)">
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <button id="addTopBtn2" class="button save">＋ 장소 추가 (상단)</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <h4 class="small">필터</h4>
+            <select id="filterType2" style="width:100%;padding:8px;border-radius:8px;margin-top:8px"></select>
+            <select id="filterTag2" style="width:100%;padding:8px;border-radius:8px;margin-top:8px"></select>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <select id="sortCharm2" style="flex:1;padding:8px;border-radius:8px"><option value="none">기본</option><option value="desc">높은순</option><option value="asc">낮은순</option></select>
+              <select id="filterMove2" style="flex:1;padding:8px;border-radius:8px"><option value="">전체</option><option value="30">30분 이하</option><option value="60">1시간 이하</option></select>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h3>요약</h3>
+        <p class="small">장소를 추가하거나 선택하면 가운데에서 상세 편집이 가능합니다. 데스크탑에서 오른쪽 섹션은 지도로 자리합니다.</p>
+        <div style="margin-top:12px">
+          <button id="addBottomBtn2" class="button save">＋ 장소 추가 (하단)</button>
+        </div>
+        <div style="margin-top:12px">
+          <button id="printBtn" class="button export">인쇄(PDF)</button>
+        </div>
+      </aside>
+
+      <section class="places-area" aria-live="polite">
+        <div id="placesList"></div>
       </section>
-    </main>
 
-    <button class="add-btn" id="addBottomBtn" style="margin-bottom:16px">＋ 장소 추가하기</button>
+      <aside class="map-frame">
+        <h4>지도 영역 (데스크탑 전용)</h4>
+        <p class="small">여기는 실제 지도(예: 카카오/구글맵)로 연동 가능. 현재는 미리보기/위치 표시용 플레이스홀더입니다.</p>
+        <div id="mapPreview" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px"></div>
+      </aside>
+    </div>
 
-    <footer style="text-align:center;color:var(--muted);padding:10px 0 60px 0;font-weight:700">Be a HAaaaPPY Travel!</footer>
+  </main>
+
+  <div class="bottom-fixed">
+    <button id="saveBtn2" class="button save">저장</button>
+    <button id="exportBtn2" class="button export">내보내기 (JSON)</button>
+    <label class="button export" style="display:flex;align-items:center;gap:8px">불러오기 <input id="importFile2" type="file" accept="application/json" style="display:none"/></label>
+    <div style="min-width:12px"></div>
+    <div id="statusText2" class="small">변경 사항 없음</div>
   </div>
 
-  <!-- bottom bar -->
-  <div class="bottom-bar" role="region" aria-label="하단 바">
-    <button id="saveBtn" class="save-btn">저장</button>
-    <button id="exportBtn" class="export-btn">내보내기 (JSON)</button>
-    <label class="import-label">불러오기 <input id="importFile" type="file" accept="application/json" style="display:none"></label>
-    <div style="width:8px"></div>
-    <div id="statusText" style="color:var(--muted);font-weight:800">변경 사항 없음</div>
-  </div>
+  <!-- 모바일 전용 빠른 추가 버튼(Floating Action Button) -->
+  <button id="mobileFab" class="fab" title="장소 추가">＋</button>
 
 <script>
-/* 안정성 최우선: 견고한 로컬 저장 + 즉시 업데이트 방식
-   - day keys: osaka_day_1 ... osaka_day_9 (유지 및 호환)
-   - currentDay: 0 = Day0 aggregated view, 1..9 = per day
-   - edits auto-save to the place's day
+/* 변경 요약:
+   - 항공(출발지/도착지) 입력 제거
+   - 모바일 UX: FAB 추가, 버튼/터치타겟 증대
+   - 가격 입력: 슬라이더 대신 숫자 입력으로 변경 (detail에 직접 입력)
+   - 인쇄: printBtn 클릭 시 새로운 창으로 포맷된 인쇄용 HTML을 생성하여 인쇄
 */
 
 const TOTAL_DAYS = 9;
@@ -179,428 +176,203 @@ let currentDay = 0;
 const RECOMMENDED_LABELS = ['맛집','카페','관광지','쇼핑','뷰포인트','온천','야경','교통','시장','박물관','휴식'];
 
 // DOM refs
-const startPlanBtn = document.getElementById('startPlanBtn');
-const spacer = document.getElementById('spacer');
+const startPlanBtn = document.getElementById('startPlanBtn2');
+const prevDay = document.getElementById('prevDay2');
+const nextDay = document.getElementById('nextDay2');
+const addTopBtn = document.getElementById('addTopBtn2');
+const addBottomBtn = document.getElementById('addBottomBtn2');
+const placesList = document.getElementById('placesList');
+const filterType = document.getElementById('filterType2');
+const filterTag = document.getElementById('filterTag2');
+const sortCharm = document.getElementById('sortCharm2');
+const filterMove = document.getElementById('filterMove2');
+const saveBtn = document.getElementById('saveBtn2');
+const exportBtn = document.getElementById('exportBtn2');
+const importFile = document.getElementById('importFile2');
+const statusText = document.getElementById('statusText2');
 const dayTitle = document.getElementById('dayTitle');
 const dayDate = document.getElementById('dayDate');
-const prevDay = document.getElementById('prevDay');
-const nextDay = document.getElementById('nextDay');
-const addTopBtn = document.getElementById('addTopBtn');
-const addBottomBtn = document.getElementById('addBottomBtn');
-const emptyAddBtn = document.getElementById('emptyAddBtn');
-const placesList = document.getElementById('placesList');
-const emptyCard = document.getElementById('emptyCard');
-const filterBarContainer = document.getElementById('filterBarContainer');
-const filterType = document.getElementById('filterType');
-const filterTag = document.getElementById('filterTag');
-const sortCharm = document.getElementById('sortCharm');
-const filterMove = document.getElementById('filterMove');
-const searchTxt = document.getElementById('searchTxt');
-const clearFilters = document.getElementById('clearFilters');
-const saveBtn = document.getElementById('saveBtn');
-const exportBtn = document.getElementById('exportBtn');
-const importFile = document.getElementById('importFile');
-const statusText = document.getElementById('statusText');
+const mapPreview = document.getElementById('mapPreview');
+const mobileFab = document.getElementById('mobileFab');
 
-// --- storage helpers ---
 function storageKey(d){ return 'osaka_day_' + d; }
-// initialize days if missing (but DO NOT overwrite existing)
 for(let i=1;i<=TOTAL_DAYS;i++){
-  if(!localStorage.getItem(storageKey(i))){
-    localStorage.setItem(storageKey(i), JSON.stringify({places:[]}));
-  }
+  if(!localStorage.getItem(storageKey(i))){ localStorage.setItem(storageKey(i), JSON.stringify({places:[]})); }
 }
-function loadDay(d){
-  if(d < 1 || d > TOTAL_DAYS) return {places:[]};
-  try { return JSON.parse(localStorage.getItem(storageKey(d))) || {places:[]} } catch(e){ return {places:[]} }
-}
-function saveDay(data, d){
-  if(d < 1 || d > TOTAL_DAYS) return;
-  localStorage.setItem(storageKey(d), JSON.stringify(data));
-}
-function findPlaceDay(placeId){
-  for(let d=1; d<=TOTAL_DAYS; d++){
-    const day = loadDay(d);
-    if((day.places||[]).some(p=>p.id===placeId)) return d;
-  }
-  return null;
-}
-function getPlaceFromDay(placeId){
-  for(let d=1; d<=TOTAL_DAYS; d++){
-    const day = loadDay(d);
-    const p = (day.places||[]).find(x=>x.id===placeId);
-    if(p) return {day:d, place: p};
-  }
-  return null;
-}
-function getAllPlaces(){
-  const all = [];
-  for(let d=1; d<=TOTAL_DAYS; d++){
-    (loadDay(d).places || []).forEach(p => all.push({...p, _day: d}));
-  }
-  return all;
-}
+function loadDay(d){ if(d < 1 || d > TOTAL_DAYS) return {places:[]}; try { return JSON.parse(localStorage.getItem(storageKey(d))) || {places:[]} } catch(e){ return {places:[]} }}
+function saveDay(data, d){ if(d < 1 || d > TOTAL_DAYS) return; localStorage.setItem(storageKey(d), JSON.stringify(data)); }
+function findPlaceDay(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); if((day.places||[]).some(p=>p.id===placeId)) return d; } return null; }
+function getPlaceFromDay(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const p = (day.places||[]).find(x=>x.id===placeId); if(p) return {day:d, place: p}; } return null; }
+function getAllPlaces(){ const all = []; for(let d=1; d<=TOTAL_DAYS; d++){ (loadDay(d).places || []).forEach(p => all.push({...p, _day: d})); } return all; }
+function newPlace(){ return { id: 'p_' + Date.now() + Math.floor(Math.random()*1000), name:'무제 장소', type:'', location:3, price:0, charm:3, memo:'', moveToNext:'', labels:[], image: '' }; }
+function setStatus(txt){ statusText.textContent = txt; if(txt === '변경 사항 없음') saveBtn.classList.remove('active'); else saveBtn.classList.add('active'); }
 
-// place factory
-function newPlace(){
-  return { id: 'p_' + Date.now() + Math.floor(Math.random()*1000), name:'', type:'', location:3, price:3, charm:3, memo:'', moveToNext:'', labels:[] };
-}
+function rebuildFilterOptions(){ const all = getAllPlaces(); const types = Array.from(new Set(all.map(p => (p.type||'').trim()).filter(Boolean))).sort(); filterType.innerHTML = '<option value="">전체</option>'; types.forEach(t => { const o=document.createElement('option'); o.value=t; o.textContent=t; filterType.appendChild(o); }); const allLabels = new Set(RECOMMENDED_LABELS); all.forEach(p => (p.labels||[]).forEach(l=>allLabels.add(l))); filterTag.innerHTML = '<option value="">전체</option>'; Array.from(allLabels).sort().forEach(l => { const o=document.createElement('option'); o.value=l; o.textContent=l; filterTag.appendChild(o); }); }
 
-// status
-function setStatus(txt){
-  statusText.textContent = txt;
-  if(txt === '변경 사항 없음') saveBtn.classList.remove('active'); else saveBtn.classList.add('active');
-}
+// reorder helper
+function reorderPlacesWithinDay(dayIndex, fromIdx, toIdx){ const d = loadDay(dayIndex); if(!d || !d.places) return; const arr = d.places; const [item] = arr.splice(fromIdx,1); arr.splice(toIdx,0,item); saveDay(d, dayIndex); setStatus('저장됨 — 순서 변경'); render(); }
 
-// rebuild filter options for Day0
-function rebuildFilterOptions(){
-  const all = getAllPlaces();
-  const types = Array.from(new Set(all.map(p => (p.type||'').trim()).filter(Boolean))).sort();
-  filterType.innerHTML = '<option value="">전체</option>';
-  types.forEach(t => { const o=document.createElement('option'); o.value=t; o.textContent=t; filterType.appendChild(o); });
-
-  const allLabels = new Set(RECOMMENDED_LABELS);
-  all.forEach(p => (p.labels||[]).forEach(l=>allLabels.add(l)));
-  filterTag.innerHTML = '<option value="">전체</option>';
-  Array.from(allLabels).sort().forEach(l => { const o=document.createElement('option'); o.value=l; o.textContent=l; filterTag.appendChild(o); });
-}
-
-/* Render (single source of truth) */
 function render(){
-  dayTitle.textContent = (currentDay === 0) ? 'Day 0' : 'Day ' + currentDay;
-  dayDate.textContent = (currentDay === 0) ? '전체 일정' : '';
-
-  // show filter only on Day0
-  filterBarContainer.style.display = (currentDay === 0) ? 'block' : 'none';
+  dayTitle.textContent = (currentDay === 0) ? '전체 일정' : 'Day ' + currentDay;
+  if(dayDate) dayDate.textContent = (currentDay === 0) ? '전체' : '';
   rebuildFilterOptions();
-
-  // items
   let items = (currentDay === 0) ? getAllPlaces() : (loadDay(currentDay).places || []).map(p => ({...p, _day: currentDay}));
 
-  // Day0 filters
-  if(currentDay === 0){
-    const tfilter = filterType.value;
-    const tagfilter = filterTag.value;
-    const movefilter = filterMove.value;
-    const q = (searchTxt.value || '').trim().toLowerCase();
-    items = items.filter(p => {
-      if(tfilter && ((p.type||'').toLowerCase() !== tfilter.toLowerCase())) return false;
-      if(tagfilter && !(p.labels||[]).includes(tagfilter)) return false;
-      if(movefilter && String(p.moveToNext || '') !== movefilter) return false;
-      if(q){
-        const hay = ((p.name||'') + ' ' + (p.type||'') + ' ' + ((p.labels||[]).join(' '))).toLowerCase();
-        if(!hay.includes(q)) return false;
-      }
-      return true;
-    });
-    if(sortCharm.value === 'desc') items.sort((a,b)=> (b.charm || 0) - (a.charm || 0));
-    if(sortCharm.value === 'asc') items.sort((a,b)=> (a.charm || 0) - (b.charm || 0));
-  }
+  if(currentDay === 0){ const tfilter = filterType.value; const tagfilter = filterTag.value; const movefilter = filterMove.value; const q = (document.getElementById('globalSearch') && document.getElementById('globalSearch').value || '').trim().toLowerCase(); items = items.filter(p => { if(tfilter && ((p.type||'').toLowerCase() !== tfilter.toLowerCase())) return false; if(tagfilter && !(p.labels||[]).includes(tagfilter)) return false; if(movefilter && String(p.moveToNext || '') !== movefilter) return false; if(q){ const hay = ((p.name||'') + ' ' + (p.type||'') + ' ' + ((p.labels||[]).join(' '))).toLowerCase(); if(!hay.includes(q)) return false; } return true; }); if(sortCharm.value === 'desc') items.sort((a,b)=> (b.charm || 0) - (a.charm || 0)); if(sortCharm.value === 'asc') items.sort((a,b)=> (a.charm || 0) - (b.charm || 0)); }
 
-  // render list
   placesList.innerHTML = '';
-  if(!items || items.length === 0){ emptyCard.style.display = 'block'; return; } else emptyCard.style.display='none';
+  if(!items || items.length === 0){ const emp = document.createElement('div'); emp.className='card'; emp.innerHTML = '<div style="text-align:center;width:100%"><h3>장소가 없습니다</h3><p class="small">첫 장소를 추가해보세요 ✨</p><div style="margin-top:12px"><button id="emptyAddBtn" class="button save">＋ 추가</button></div></div>'; placesList.appendChild(emp); const btn = document.getElementById('emptyAddBtn'); if(btn) btn.addEventListener('click', ()=> addPlaceToDay(currentDay===0?1:currentDay,false)); return; }
 
-  items.forEach(p => {
-    const el = document.createElement('div'); el.className = 'place'; el.dataset.id = p.id;
+  // populate map preview thumbnails
+  mapPreview.innerHTML = '';
+  items.slice(0,6).forEach(p=>{ const img = document.createElement('img'); img.alt=p.name || ''; img.className='place-thumb'; img.src = p.image || 'https://via.placeholder.com/160x120?text=No+Image'; mapPreview.appendChild(img); });
 
-    const sum = document.createElement('div'); sum.className = 'place-summary';
-    const left = document.createElement('div'); left.className = 'place-left';
-    const badge = document.createElement('div'); badge.className = 'badge'; badge.textContent = p.charm || 3;
-    const info = document.createElement('div');
-    const name = document.createElement('div'); name.className = 'place-name'; name.textContent = p.name || '무제 장소';
-    const type = document.createElement('div'); type.className = 'place-type'; type.textContent = p.type || '종류 미지정';
-    info.appendChild(name); info.appendChild(type);
+  items.forEach((p, idx) => {
+    const el = document.createElement('div'); el.className = 'card place'; el.dataset.id = p.id; el.setAttribute('draggable','true');
+    const left = document.createElement('div'); left.className='meta';
+    const badge = document.createElement('div'); badge.className='badge'; badge.textContent = p.charm || 3;
+    const info = document.createElement('div'); info.style.minWidth='220px';
+    const rowTop = document.createElement('div'); rowTop.style.display='flex'; rowTop.style.gap='10px'; rowTop.style.alignItems='center';
+    const thumb = document.createElement('img'); thumb.className='place-thumb'; thumb.src = p.image || 'https://via.placeholder.com/160x120?text=No+Image';
+    const textWrap = document.createElement('div');
+    const name = document.createElement('div'); name.style.fontWeight='800'; name.textContent = p.name || '무제 장소';
+    const type = document.createElement('div'); type.className='small'; type.textContent = (p.type || '종류 미지정') + ' · Day ' + (p._day || '?');
+    textWrap.appendChild(name); textWrap.appendChild(type);
+    rowTop.appendChild(thumb); rowTop.appendChild(textWrap);
+    info.appendChild(rowTop);
     left.appendChild(badge); left.appendChild(info);
 
-    if(currentDay === 0){
-      const dayChip = document.createElement('div'); dayChip.className='chip'; dayChip.style.marginLeft='8px'; dayChip.textContent = 'Day ' + (p._day || '?');
-      left.appendChild(dayChip);
-    }
+    const right = document.createElement('div'); right.style.display='flex'; right.style.flexDirection='column'; right.style.alignItems='flex-end'; right.style.minWidth='160px';
+    const priceDisplay = document.createElement('div'); priceDisplay.className='small'; priceDisplay.textContent = '가격: ' + (p.price ? (p.price + '원') : '미정');
+    const chipsWrap = document.createElement('div'); chipsWrap.className='chips'; (p.labels||[]).forEach(lbl=>{ const c=document.createElement('div'); c.className='chip'; c.textContent=lbl; chipsWrap.appendChild(c); });
+    const actions = document.createElement('div'); actions.className='controls';
+    const openBtn = document.createElement('button'); openBtn.textContent='⋯'; openBtn.className='button';
+    const gotoBtn = document.createElement('button'); gotoBtn.textContent='해당일로'; gotoBtn.className='button';
+    actions.appendChild(openBtn); actions.appendChild(gotoBtn);
+    right.appendChild(priceDisplay); right.appendChild(chipsWrap); right.appendChild(actions);
 
-    // label chips
-    const chipsWrap = document.createElement('div'); chipsWrap.className='chips';
-    (p.labels || []).forEach(lbl => { const c=document.createElement('div'); c.className='chip'; c.textContent = lbl; chipsWrap.appendChild(c); });
+    el.appendChild(left); el.appendChild(right);
 
-    const right = document.createElement('div'); right.style.display='flex'; right.style.flexDirection='column'; right.style.alignItems='flex-end';
-    const dot = document.createElement('div'); dot.className = 'chev'; dot.textContent = '⋯'; right.appendChild(dot);
-    sum.appendChild(left); sum.appendChild(right);
-
-    const detail = document.createElement('div'); detail.className = 'place-detail';
-
-    // inputs
+    // detail
+    const detail = document.createElement('div'); detail.className='detail';
     const inputName = document.createElement('input'); inputName.className='input'; inputName.placeholder='장소명'; inputName.value = p.name || '';
-    const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='메모 추가'; inputType.value = p.type || '';
+    const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='종류'; inputType.value = p.type || '';
+    // price input (numeric) - replaces slider behavior
+    const priceRow = document.createElement('div'); priceRow.style.display='flex'; priceRow.style.gap='8px'; priceRow.style.alignItems='center'; priceRow.style.marginTop='8px';
+    const priceLabel = document.createElement('div'); priceLabel.textContent='예상 가격(원)'; priceLabel.className='small';
+    const priceInput = document.createElement('input'); priceInput.type='number'; priceInput.min='0'; priceInput.placeholder='0'; priceInput.value = p.price || 0; priceInput.style.padding='8px'; priceInput.style.borderRadius='8px'; priceInput.style.border='1px solid rgba(0,0,0,0.06)';
+    priceInput.addEventListener('input', ()=> { immediateUpdate({price: Number(priceInput.value || 0)}); });
+    priceRow.appendChild(priceLabel); priceRow.appendChild(priceInput);
 
-    // labels UI
-    const labelRow = document.createElement('div'); labelRow.style.display='flex'; labelRow.style.flexWrap='wrap'; labelRow.style.gap='8px';
-    RECOMMENDED_LABELS.forEach(lbl => {
-      const btn = document.createElement('button'); btn.type='button'; btn.className='chip'; btn.textContent=lbl; btn.style.cursor='pointer';
-      if((p.labels||[]).includes(lbl)){ btn.style.background='linear-gradient(90deg,var(--accent-2),var(--accent))'; btn.style.color='#01202b'; }
-      btn.addEventListener('click', ()=>{
-        toggleLabel(p.id, lbl);
-      });
-      labelRow.appendChild(btn);
-    });
-
+    const labelRow = document.createElement('div'); labelRow.style.display='flex'; labelRow.style.gap='8px'; labelRow.style.flexWrap='wrap'; labelRow.style.marginTop='8px'; RECOMMENDED_LABELS.forEach(lbl => { const btn = document.createElement('button'); btn.type='button'; btn.className='chip'; btn.textContent=lbl; if((p.labels||[]).includes(lbl)){ btn.style.background='linear-gradient(90deg,#00b0ff,#0077c8)'; btn.style.color='#012'; } btn.addEventListener('click', ()=> toggleLabel(p.id, lbl)); labelRow.appendChild(btn); });
     const addLabelBox = document.createElement('div'); addLabelBox.style.display='flex'; addLabelBox.style.gap='8px'; addLabelBox.style.marginTop='8px';
     const labelInput = document.createElement('input'); labelInput.className='input'; labelInput.placeholder='직접 라벨 추가';
-    const labelAddBtn = document.createElement('button'); labelAddBtn.className='add-btn'; labelAddBtn.style.padding='8px 10px'; labelAddBtn.style.minWidth='auto'; labelAddBtn.textContent='추가';
-    labelAddBtn.addEventListener('click', ()=> {
-      const val = (labelInput.value || '').trim(); if(!val) return; addLabelToPlace(p.id, val); labelInput.value=''; render();
-    });
+    const labelAddBtn = document.createElement('button'); labelAddBtn.className='button'; labelAddBtn.textContent='추가'; labelAddBtn.addEventListener('click', ()=>{ const val=(labelInput.value||'').trim(); if(!val) return; addLabelToPlace(p.id, val); labelInput.value=''; render(); });
     addLabelBox.appendChild(labelInput); addLabelBox.appendChild(labelAddBtn);
 
-    // sliders
-    const rowLoc = document.createElement('div'); rowLoc.className='row';
-    const labelLoc = document.createElement('div'); labelLoc.className='label'; labelLoc.textContent='위치';
-    const rangeLoc = document.createElement('input'); rangeLoc.type='range'; rangeLoc.min=1; rangeLoc.max=5; rangeLoc.value=p.location||3; rangeLoc.className='range';
-    rowLoc.appendChild(labelLoc); rowLoc.appendChild(rangeLoc);
+    // image upload
+    const imgRow = document.createElement('div'); imgRow.style.display='flex'; imgRow.style.gap='8px'; imgRow.style.alignItems='center'; imgRow.style.marginTop='8px';
+    const imgInput = document.createElement('input'); imgInput.type='file'; imgInput.accept='image/*';
+    imgInput.addEventListener('change', (ev)=>{ const f = ev.target.files[0]; if(!f) return; const r=new FileReader(); r.onload = e => { immediateUpdate({image: e.target.result}); }; r.readAsDataURL(f); });
+    const imgLabel = document.createElement('div'); imgLabel.textContent='사진 업로드'; imgLabel.className='small';
+    imgRow.appendChild(imgLabel); imgRow.appendChild(imgInput);
 
-    const rowPrice = document.createElement('div'); rowPrice.className='row';
-    const labelPrice = document.createElement('div'); labelPrice.className='label'; labelPrice.textContent='가격';
-    const rangePrice = document.createElement('input'); rangePrice.type='range'; rangePrice.min=1; rangePrice.max=5; rangePrice.value=p.price||3; rangePrice.className='range';
-    rowPrice.appendChild(labelPrice); rowPrice.appendChild(rangePrice);
+    const delBtn = document.createElement('button'); delBtn.className='button export'; delBtn.textContent='삭제'; delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')) deletePlaceById(p.id); });
 
-    const rowCharm = document.createElement('div'); rowCharm.className='row';
-    const labelCharm = document.createElement('div'); labelCharm.className='label'; labelCharm.textContent='종합 매력';
-    const rangeCharm = document.createElement('input'); rangeCharm.type='range'; rangeCharm.min=1; rangeCharm.max=5; rangeCharm.value=p.charm||3; rangeCharm.className='range';
-    rowCharm.appendChild(labelCharm); rowCharm.appendChild(rangeCharm);
+    detail.appendChild(inputName); detail.appendChild(inputType); detail.appendChild(priceRow); detail.appendChild(labelRow); detail.appendChild(addLabelBox); detail.appendChild(imgRow); detail.appendChild(delBtn);
 
-    // move select
-    const moveRow = document.createElement('div'); moveRow.className='row';
-    const moveLabel = document.createElement('div'); moveLabel.className='label'; moveLabel.textContent='이동시간';
-    const moveSelect = document.createElement('select'); moveSelect.className='input';
-    [['','미지정'],['30','30분 이하'],['60','1시간 이하'],['120','2시간 이하'],['240','2시간 이상']].forEach(opt=>{
-      const o = document.createElement('option'); o.value=opt[0]; o.textContent=opt[1]; if(String(p.moveToNext||'')===String(opt[0])) o.selected=true;
-      moveSelect.appendChild(o);
-    });
-    moveRow.appendChild(moveLabel); moveRow.appendChild(moveSelect);
+    el.appendChild(detail);
 
-    // day selector
-    const dayRow = document.createElement('div'); dayRow.className='row';
-    const dayLbl = document.createElement('div'); dayLbl.className='label'; dayLbl.textContent='Assigned';
-    const daySelect = document.createElement('select'); daySelect.className='select-day';
-    for(let d=0; d<=TOTAL_DAYS; d++){ const o=document.createElement('option'); o.value=d; o.textContent = (d===0?'Day 0':'Day '+d); daySelect.appendChild(o); }
-    daySelect.value = p._day || (currentDay>0 ? currentDay : 1);
-    dayRow.appendChild(dayLbl); dayRow.appendChild(daySelect);
+    openBtn.addEventListener('click', ()=>{ const was = el.classList.toggle('open'); if(was) setTimeout(()=> el.scrollIntoView({behavior:'smooth', block:'center'}), 140); });
 
-    const actions = document.createElement('div'); actions.className='small-actions';
-    const gotoBtn = document.createElement('button'); gotoBtn.textContent='해당일로 이동';
-    const deleteBtn = document.createElement('button'); deleteBtn.textContent='삭제';
-    const upBtn = document.createElement('button'); upBtn.textContent='▲';
-    const downBtn = document.createElement('button'); downBtn.textContent='▼';
-    actions.appendChild(gotoBtn); actions.appendChild(deleteBtn); actions.appendChild(upBtn); actions.appendChild(downBtn);
-
-    // assemble detail
-    detail.appendChild(inputName);
-    detail.appendChild(inputType);
-    detail.appendChild(labelRow);
-    detail.appendChild(addLabelBox);
-    detail.appendChild(rowLoc); detail.appendChild(rowPrice); detail.appendChild(rowCharm);
-    detail.appendChild(moveRow); detail.appendChild(dayRow);
-    detail.appendChild(actions);
-
-    // events - toggles
-    sum.addEventListener('click', ()=> { const was = el.classList.toggle('open'); if(was) setTimeout(()=> el.scrollIntoView({behavior:'smooth', block:'center'}), 140); });
-
-    // input handlers which immediately persist changes to the underlying day storage
-    function immediateUpdate(updates){
-      // find which day currently holds this place
-      const fd = getPlaceFromDay(p.id);
-      const targetDay = fd ? fd.day : (p._day || 1);
-      if(!fd){
-        // if not found, create in target day
-        const dayObj = loadDay(targetDay); dayObj.places = dayObj.places || []; dayObj.places.push({...p}); saveDay(dayObj, targetDay);
-      }
+    function immediateUpdate(updates){ const fd = getPlaceFromDay(p.id); const targetDay = fd ? fd.day : (p._day || 1); if(!fd){ const dayObj = loadDay(targetDay); dayObj.places = dayObj.places || []; dayObj.places.push({...p}); saveDay(dayObj, targetDay); }
       const dayObj = loadDay(targetDay);
       const idx = (dayObj.places||[]).findIndex(x=>x.id===p.id);
-      if(idx === -1) {
-        // nothing to update (safety)
-        return;
-      }
+      if(idx === -1) return;
       dayObj.places[idx] = {...dayObj.places[idx], ...updates};
       saveDay(dayObj, targetDay);
       setStatus('저장됨');
-      // make sure UI updates reflect saved data
+      render();
     }
 
-    inputName.addEventListener('input', ()=> immediateUpdate({name: inputName.value}));
-    inputType.addEventListener('input', ()=> immediateUpdate({type: inputType.value}));
-    rangeLoc.addEventListener('input', ()=> immediateUpdate({location: Number(rangeLoc.value)}));
-    rangePrice.addEventListener('input', ()=> immediateUpdate({price: Number(rangePrice.value)}));
-    rangeCharm.addEventListener('input', ()=> { badge.textContent = rangeCharm.value; immediateUpdate({charm: Number(rangeCharm.value)}); });
-    moveSelect.addEventListener('change', ()=> immediateUpdate({moveToNext: moveSelect.value}));
-    daySelect.addEventListener('change', ()=> {
-      const newDay = Number(daySelect.value);
-      movePlaceToDay(p.id, newDay);
+    inputName.addEventListener('input', ()=> immediateUpdate({name: inputName.value})); inputType.addEventListener('input', ()=> immediateUpdate({type: inputType.value}));
+
+    gotoBtn.addEventListener('click', ()=>{ const assignedDay = (getPlaceFromDay(p.id) || {}).day || (p._day || 1); if(assignedDay >=1 && assignedDay <= TOTAL_DAYS){ currentDay = assignedDay; render(); window.scrollTo({top:0,behavior:'smooth'}); } else alert('할당된 날짜가 없습니다.'); });
+
+    // drag handlers
+    el.addEventListener('dragstart', (ev)=>{ ev.dataTransfer.setData('text/plain', p.id); ev.dataTransfer.effectAllowed='move'; el.style.opacity='0.5'; });
+    el.addEventListener('dragend', ()=>{ el.style.opacity='1'; });
+    el.addEventListener('dragover', (ev)=>{ ev.preventDefault(); ev.dataTransfer.dropEffect='move'; });
+    el.addEventListener('drop', (ev)=>{ ev.preventDefault(); const draggedId = ev.dataTransfer.getData('text/plain'); if(!draggedId || draggedId === p.id) return; // find positions
+      const srcInfo = getPlaceFromDay(draggedId); const dstInfo = getPlaceFromDay(p.id);
+      if(!srcInfo || !dstInfo) return;
+      const srcDay = srcInfo.day, dstDay = dstInfo.day;
+      const srcArr = loadDay(srcDay).places; const dstArr = loadDay(dstDay).places;
+      const fromIdx = srcArr.findIndex(x=>x.id===draggedId); const toIdx = dstArr.findIndex(x=>x.id===p.id);
+      if(fromIdx>-1 && toIdx>-1){ // if same day: reorder
+        if(srcDay === dstDay) reorderPlacesWithinDay(srcDay, fromIdx, toIdx);
+        else { // move between days
+          const [item] = srcArr.splice(fromIdx,1); dstArr.splice(toIdx,0,item); saveDay({places:srcArr}, srcDay); saveDay({places:dstArr}, dstDay); setStatus('저장됨 — 이동'); render(); }
+      }
     });
 
-    // action handlers
-    gotoBtn.addEventListener('click', ()=> {
-      const assignedDay = (getPlaceFromDay(p.id) || {}).day || (p._day || 1);
-      if(assignedDay >=1 && assignedDay <= TOTAL_DAYS){
-        currentDay = assignedDay;
-        scrollToDayHeader();
-        render();
-      } else alert('할당된 날짜가 없습니다.');
-    });
-    deleteBtn.addEventListener('click', ()=> { if(!confirm('삭제하시겠습니까?')) return; deletePlaceById(p.id); });
-    upBtn.addEventListener('click', ()=> movePosition(p.id, -1));
-    downBtn.addEventListener('click', ()=> movePosition(p.id, 1));
-
-    if((p.labels || []).length > 0) left.appendChild(chipsWrap);
-    el.appendChild(sum); el.appendChild(detail);
     placesList.appendChild(el);
-
-    // short move label
-    const shortMove = document.createElement('div'); shortMove.style.fontSize='0.86rem'; shortMove.style.color='var(--muted)';
-    const mv = p.moveToNext || ''; const mvLabel = ({'30':'30분 이하','60':'1시간 이하','120':'2시간 이하','240':'2시간 이상'})[mv] || '';
-    if(mvLabel) shortMove.textContent = `이동: ${mvLabel}`; sum.appendChild(shortMove);
   });
 }
 
-/* Label toggles and CRUD helpers */
-function toggleLabel(placeId, label){
-  const rec = getPlaceFromDay(placeId);
-  if(!rec) return;
-  const day = loadDay(rec.day);
-  const idx = day.places.findIndex(x=>x.id===placeId);
-  if(idx===-1) return;
-  const labels = day.places[idx].labels || [];
-  if(labels.includes(label)) day.places[idx].labels = labels.filter(x=>x!==label);
-  else day.places[idx].labels = [...labels, label];
-  saveDay(day, rec.day);
-  setStatus('저장됨');
-  render();
-}
-function addLabelToPlace(placeId, label){
-  const rec = getPlaceFromDay(placeId);
-  const dayIndex = rec ? rec.day : 1;
-  const day = loadDay(dayIndex);
-  const idx = day.places.findIndex(x=>x.id===placeId);
-  if(idx===-1) return;
-  day.places[idx].labels = day.places[idx].labels || [];
-  if(!day.places[idx].labels.includes(label)) day.places[idx].labels.push(label);
-  saveDay(day, dayIndex);
-  setStatus('저장됨');
-}
-function deletePlaceById(placeId){
-  for(let d=1; d<=TOTAL_DAYS; d++){
-    const day = loadDay(d);
-    const idx = (day.places||[]).findIndex(x=>x.id===placeId);
-    if(idx>-1){ day.places.splice(idx,1); saveDay(day,d); setStatus('저장됨 — 삭제'); render(); return; }
-  }
-  alert('삭제 실패: 항목을 찾을 수 없음');
-}
-function movePosition(placeId, dir){
-  const fd = getPlaceFromDay(placeId);
-  if(!fd) return;
-  const day = loadDay(fd.day);
-  const idx = day.places.findIndex(x=>x.id===placeId);
-  if(idx === -1) return;
-  const ni = idx + dir;
-  if(ni<0 || ni>=day.places.length) return;
-  const [it] = day.places.splice(idx,1);
-  day.places.splice(ni,0,it);
-  saveDay(day, fd.day);
-  setStatus('저장됨 — 순서 변경');
-  render();
-}
-function movePlaceToDay(placeId, newDay){
-  const src = getPlaceFromDay(placeId);
-  if(!src){ alert('항목을 찾을 수 없음'); return; }
-  if(newDay === 0) newDay = 1;
-  if(newDay === src.day) return;
-  const srcDay = loadDay(src.day);
-  const idx = srcDay.places.findIndex(x=>x.id===placeId);
-  if(idx > -1){ const [it] = srcDay.places.splice(idx,1); saveDay(srcDay, src.day); const dest = loadDay(newDay); dest.places = dest.places || []; dest.places.push(it); saveDay(dest, newDay); setStatus('저장됨 — 날짜 이동'); render(); }
-}
+function toggleLabel(placeId, label){ const rec = getPlaceFromDay(placeId); if(!rec) return; const day = loadDay(rec.day); const idx = day.places.findIndex(x=>x.id===placeId); if(idx===-1) return; const labels = day.places[idx].labels || []; if(labels.includes(label)) day.places[idx].labels = labels.filter(x=>x!==label); else day.places[idx].labels = [...labels, label]; saveDay(day, rec.day); setStatus('저장됨'); render(); }
+function addLabelToPlace(placeId, label){ const rec = getPlaceFromDay(placeId); const dayIndex = rec ? rec.day : 1; const day = loadDay(dayIndex); const idx = day.places.findIndex(x=>x.id===placeId); if(idx===-1) return; day.places[idx].labels = day.places[idx].labels || []; if(!day.places[idx].labels.includes(label)) day.places[idx].labels.push(label); saveDay(day, dayIndex); setStatus('저장됨'); }
+function deletePlaceById(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const idx = (day.places||[]).findIndex(x=>x.id===placeId); if(idx>-1){ day.places.splice(idx,1); saveDay(day,d); setStatus('저장됨 — 삭제'); render(); return; } } alert('삭제 실패: 항목을 찾을 수 없음'); }
 
-/* Add place */
-function addPlaceToDay(targetDay, atTop=false){
-  const p = newPlace();
-  const dayIndex = (targetDay >= 1 && targetDay <= TOTAL_DAYS) ? targetDay : 1;
-  const day = loadDay(dayIndex);
-  day.places = day.places || [];
-  if(atTop) day.places.unshift(p); else day.places.push(p);
-  saveDay(day, dayIndex);
-  setStatus('저장됨 — 추가');
-  render();
-}
+function addPlaceToDay(targetDay, atTop=false){ const p = newPlace(); const dayIndex = (targetDay >= 1 && targetDay <= TOTAL_DAYS) ? targetDay : 1; const day = loadDay(dayIndex); day.places = day.places || []; if(atTop) day.places.unshift(p); else day.places.push(p); saveDay(day, dayIndex); setStatus('저장됨 — 추가'); render(); }
+
 addTopBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, true); });
 addBottomBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); });
-if(emptyAddBtn) emptyAddBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); });
+prevDay.addEventListener('click', ()=> { currentDay = (currentDay - 1 + (TOTAL_DAYS+1)) % (TOTAL_DAYS+1); render(); });
+nextDay.addEventListener('click', ()=> { currentDay = (currentDay + 1) % (TOTAL_DAYS+1); render(); });
 
-/* Navigation */
-prevDay.addEventListener('click', ()=> { currentDay = (currentDay - 1 + (TOTAL_DAYS+1)) % (TOTAL_DAYS+1); render(); scrollToDayHeader(); });
-nextDay.addEventListener('click', ()=> { currentDay = (currentDay + 1) % (TOTAL_DAYS+1); render(); scrollToDayHeader(); });
+[filterType, filterTag, sortCharm, filterMove].forEach(el => { el.addEventListener && el.addEventListener('input', ()=> { if(currentDay===0) render(); }); });
 
-/* Filters binding (Day0 only) */
-[filterType, filterTag, sortCharm, filterMove, searchTxt].forEach(el => el.addEventListener('input', ()=> { if(currentDay===0) render(); }));
-clearFilters.addEventListener('click', ()=> { filterType.value=''; filterTag.value=''; sortCharm.value='none'; filterMove.value=''; searchTxt.value=''; render(); });
+saveBtn.addEventListener('click', ()=> { setStatus('변경 사항 없음'); });
+exportBtn.addEventListener('click', ()=> { const dump = {}; for(let d=1; d<=TOTAL_DAYS; d++) dump['Day'+d] = loadDay(d); const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='osaka_trip_export.json'; a.click(); URL.revokeObjectURL(url); });
+importFile.addEventListener('change', e => { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => { try{ const obj = JSON.parse(ev.target.result); let found=false; for(let d=1; d<=TOTAL_DAYS; d++){ if(obj['Day'+d]){ saveDay(obj['Day'+d], d); found=true; } } if(!found && Array.isArray(obj.places)){ saveDay({places: obj.places}, 1); found=true; } if(found){ alert('불러오기 완료'); setStatus('변경 사항 없음'); render(); } else alert('파일 형식이 올바르지 않습니다.'); }catch(err){ alert('파일 읽기 실패'); console.error(err); } }; r.readAsText(f); e.target.value=''; });
 
-/* Save/Export/Import */
-saveBtn.addEventListener('click', ()=> { setStatus('저장됨'); });
-exportBtn.addEventListener('click', ()=> {
-  const dump = {};
-  for(let d=1; d<=TOTAL_DAYS; d++) dump['Day'+d] = loadDay(d);
-  const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='osaka_trip_export.json'; a.click(); URL.revokeObjectURL(url);
+startPlanBtn.addEventListener('click', ()=>{ currentDay = 1; render(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+// mobile FAB
+if(mobileFab) mobileFab.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}); });
+
+// print: create a clean printable window with cover + per-day sections
+const printBtn = document.getElementById('printBtn'); if(printBtn) printBtn.addEventListener('click', ()=>{
+  const win = window.open('','_blank');
+  const title = document.querySelector('.hero h1') ? document.querySelector('.hero h1').textContent : '여행 일정';
+  const dates = document.querySelector('.hero div') ? document.querySelector('.hero div').textContent : '';
+  const style = `body{font-family:Inter,system-ui,-apple-system,"Noto Sans KR";color:#05212b;padding:28px} .cover{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh} .cover h1{font-size:36px;margin:6px 0} .cover p{font-size:18px;color:#475569} .day{page-break-after:always;margin-top:24px} .place{border-bottom:1px solid #e6eef6;padding:12px 0;display:flex;gap:12px} .place img{width:120px;height:84px;object-fit:cover;border-radius:8px} .meta{flex:1} .meta h3{margin:0 0 6px 0} .meta p{margin:0;color:#475569}</style>`;
+  let html = `<!doctype html><html><head><meta charset="utf-8"><title>Printable - ${title}</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">${style}</head><body>`;
+  html += `<div class="cover"><h1>${title}</h1><p>${dates}</p><p style="margin-top:12px;color:#94a3b8">출력일: ${new Date().toLocaleString()}</p></div>`;
+  for(let d=1; d<=TOTAL_DAYS; d++){
+    const day = loadDay(d);
+    if(!day || !day.places || day.places.length===0) continue;
+    html += `<div class="day"><h2>Day ${d}</h2>`;
+    day.places.forEach(p => {
+      html += `<div class="place">`;
+      html += `<img src="${p.image || 'https://via.placeholder.com/160x120?text=No+Image'}" alt="">`;
+      html += `<div class="meta"><h3>${p.name || '무제 장소'}</h3><p>종류: ${p.type || '미정'} · 가격: ${p.price ? p.price + '원' : '미정'}</p><p>${(p.labels||[]).join(', ')}</p></div>`;
+      html += `</div>`;
+    });
+    html += `</div>`;
+  }
+  html += '</body></html>';
+  win.document.open(); win.document.write(html); win.document.close();
+  // delay slightly to ensure images load
+  setTimeout(()=>{ win.focus(); win.print(); }, 600);
 });
-importFile.addEventListener('change', e => {
-  const f = e.target.files[0]; if(!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    try{
-      const obj = JSON.parse(ev.target.result);
-      let found=false;
-      for(let d=1; d<=TOTAL_DAYS; d++){
-        if(obj['Day'+d]){ saveDay(obj['Day'+d], d); found=true; }
-      }
-      if(!found && Array.isArray(obj.places)){ saveDay({places: obj.places}, 1); found=true; }
-      if(found){ alert('불러오기 완료'); setStatus('변경 사항 없음'); render(); } else alert('파일 형식이 올바르지 않습니다.');
-    }catch(err){ alert('파일 읽기 실패'); console.error(err); }
-  };
-  r.readAsText(f); e.target.value='';
-});
 
-/* Smooth animation: start => Day1 */
-function animateToDay1(){
-  currentDay = 1;
-  render();
-  scrollToDayHeader();
-}
-function scrollToDayHeader(){
-  const dh = document.querySelector('.day-header');
-  if(!dh) return;
-  const top = dh.getBoundingClientRect().top + window.scrollY - 12;
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-
-/* start button */
-startPlanBtn.addEventListener('click', (e)=> { e.preventDefault(); animateToDay1(); });
-
-/* gesture: touch swipe up / wheel detect at top */
-let touchStartY = null;
-window.addEventListener('touchstart', e => { if(e.touches && e.touches[0]) touchStartY = e.touches[0].clientY; }, {passive:true});
-window.addEventListener('touchmove', e => {
-  if(touchStartY === null) return;
-  const y = e.touches[0].clientY; const dy = touchStartY - y;
-  if(window.scrollY <= 40 && dy > 140) { touchStartY = null; animateToDay1(); }
-}, {passive:true});
-window.addEventListener('touchend', ()=> { touchStartY = null; });
-
-let wheelCooldown = false;
-window.addEventListener('wheel', e => {
-  if(window.scrollY <= 40 && e.deltaY > 80 && !wheelCooldown){ wheelCooldown = true; animateToDay1(); setTimeout(()=> wheelCooldown=false, 1200); }
-}, {passive:true});
+// small niceties
+const globalSearchBtn = document.getElementById('globalSearchBtn'); if(globalSearchBtn) globalSearchBtn.addEventListener('click', ()=> render());
 
 // initial render
-render();
-setStatus('변경 사항 없음');
-window.scrollTo({ top: 0, behavior: 'auto' });
-
+render(); setStatus('변경 사항 없음');
 </script>
 </body>
 </html>
