@@ -3,409 +3,169 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>오사카 여행 — (KAL 스타일 리디자인, 체류시간 추가)</title>
+<title>오사카 여행 — (날짜 탭 + 심플 구조)</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+<!-- 사용자 업로드 웹폰트: 기본 경로는 /mnt/data/user-font.woff2 입니다. 실제 파일명이 다르면 교체해주세요. -->
 <style>
+@font-face{font-family: 'UserFont'; src: url('/mnt/data/user-font.woff2') format('woff2'), url('/mnt/data/user-font.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap;}
 :root{
-  --bg:#f4fbff; --nav:#012a59; --accent:#0077c8; --accent-2:#00a4ff; --card:#fff; --muted:#6b7881; --text:#05212b; --radius:12px; --container:1200px;
+  --bg:#f6fbff; --accent:#0077c8; --accent-2:#00a4ff; --card:#fff; --muted:#6b7881; --text:#05212b; --radius:12px; --container:1100px;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Noto Sans KR"}
-.header{background:linear-gradient(90deg,var(--nav),#0b5d89);color:white;padding:14px 18px;position:sticky;top:0;z-index:60;box-shadow:0 6px 18px rgba(3,30,50,0.12)}
-.header .inner{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.logo{display:flex;align-items:center;gap:12px;font-weight:900}
-.logo .mark{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:900;color:#012;font-size:1.05rem}
-.nav{display:flex;gap:14px;align-items:center}
-.nav a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:700}
-.searchbar{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.08);padding:8px;border-radius:999px}
-.searchbar input{border:0;background:transparent;color:white;padding:8px;outline:none;width:200px}
-.container{max-width:var(--container);margin:18px auto;padding:0 16px}
-.hero{background-image:linear-gradient(180deg,rgba(1,37,58,0.92), rgba(0,112,200,0.5)), url('https://images.unsplash.com/photo-1505765052422-6c1f2c3c27c4?auto=format&fit=crop&w=1400&q=80');background-size:cover;border-radius:12px;padding:28px;color:white;display:flex;align-items:center;gap:18px}
-.hero .left{flex:1}
-.hero h1{font-size:2.1rem;margin:6px 0 8px 0}
-.hero p{margin:0 0 12px 0;color:rgba(255,255,255,0.95);font-weight:500}
-.hero .cta{background:linear-gradient(90deg,var(--accent-2),var(--accent));padding:10px 16px;border-radius:999px;font-weight:900;border:none;cursor:pointer}
-.layout{display:grid;grid-template-columns:300px 1fr 420px;gap:16px;margin-top:16px}
-.sidebar{background:var(--card);border-radius:var(--radius);padding:12px;border:1px solid rgba(5,33,43,0.06)}
-.places-area{background:transparent}
-.card{background:var(--card);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(5,33,43,0.06);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.card .meta{display:flex;gap:10px;align-items:center}
-.badge{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:8px 10px;border-radius:10px;color:#012;font-weight:900}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{background:rgba(0,176,255,0.09);padding:6px 8px;border-radius:999px;font-weight:700;color:var(--nav)}
-.detail{margin-top:8px;border-top:1px dashed rgba(5,33,43,0.04);padding-top:10px;display:none}
-.place.open .detail{display:block}
-.controls{display:flex;gap:8px}
-.small{font-size:0.85rem;color:var(--muted)}
-.bottom-fixed{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:calc(100% - 40px);max-width:var(--container);display:flex;justify-content:center;gap:8px;z-index:80}
-.button{padding:10px 14px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
-.save{background:linear-gradient(90deg,var(--accent-2),var(--accent));color:#012}
-.export{background:white;border:1px solid rgba(5,33,43,0.06)}
-.map-frame{background:linear-gradient(180deg,#eaf7ff,#ffffff);border-radius:12px;padding:12px;height:420px;border:1px solid rgba(5,33,43,0.04)}
-.place-thumb{width:84px;height:64px;border-radius:8px;object-fit:cover;border:1px solid rgba(0,0,0,0.06)}
-.fab{position:fixed;right:16px;bottom:90px;width:64px;height:64px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;color:#012;font-weight:900;box-shadow:0 8px 24px rgba(3,30,50,0.18);z-index:100}
-.drag-hint{opacity:0.6;font-size:0.85rem}
-@media(max-width:1100px){ .layout{grid-template-columns:1fr 480px;} .map-frame{display:none} }
-@media(max-width:900px){
-  .layout{grid-template-columns:1fr;gap:12px}
-  .sidebar{order:2}
-  .hero{flex-direction:column;padding:18px}
-  .searchbar input{width:120px}
-  .bottom-fixed{display:none}
-  .fab{display:flex}
-  .card{padding:14px}
-  .place-thumb{width:72px;height:56px}
-  .button{padding:14px 18px;font-size:1rem}
-}
-/* print styles */
-@media print{
-  body{background:white;color:#05212b}
-  .header, .bottom-fixed, .controls, .nav, .searchbar, .fab { display:none !important }
-  .card{page-break-inside:avoid;break-inside:avoid;margin:0 0 12px 0;border:0;padding:8px}
-  .map-frame, .sidebar { display:none }
-  .places-area{width:100%}
-}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,'Noto Sans KR';font-size:16px}
+.container{max-width:var(--container);margin:12px auto;padding:0 16px}
+/* Hero */
+.hero{background:linear-gradient(180deg, rgba(1,37,58,0.96), rgba(0,80,140,0.85)), url('https://images.unsplash.com/photo-1505765052422-6c1f2c3c27c4?auto=format&fit=crop&w=1400&q=80'); background-size:cover;border-radius:12px;padding:18px;color:#fff;display:flex;align-items:center;gap:12px}
+.hero h1{font-size:1.7rem;margin:0;line-height:1.05}
+.hero p{margin:6px 0 0 0;color:rgba(255,255,255,0.95)}
+.title-font{font-family: 'UserFont', Inter, system-ui, -apple-system;}
+/* Tabs */
+.tabs{display:flex;gap:6px;overflow:auto;padding:10px 0;margin-top:12px}
+.tab{background:transparent;border-radius:10px;padding:8px 12px;border:1px solid rgba(5,33,43,0.06);cursor:pointer;font-weight:700;white-space:nowrap}
+.tab.active{background:linear-gradient(90deg,var(--accent-2),var(--accent));color:#012}
+/* Layout simple */
+.layout{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.controls{display:flex;gap:8px;align-items:center}
+.controls .search{flex:1}
+.places{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--card);border-radius:12px;padding:12px;border:1px solid rgba(5,33,43,0.06);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.card .meta{display:flex;gap:12px;align-items:center}
+.place-thumb{width:80px;height:60px;border-radius:8px;object-fit:cover}
+.small{font-size:0.86rem;color:var(--muted)}
+.fab{position:fixed;right:16px;bottom:78px;width:64px;height:64px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;color:#012;font-weight:900;box-shadow:0 10px 30px rgba(3,30,50,0.18);z-index:100}
+.summary{display:flex;gap:12px;align-items:center}
+.summary .pill{background:#fff;padding:8px 12px;border-radius:10px;border:1px solid rgba(5,33,43,0.06);font-weight:700}
+/* Detail modal light-weight */
+.modal{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top-left-radius:12px;border-top-right-radius:12px;padding:14px;border:1px solid rgba(5,33,43,0.06);box-shadow:0 -20px 40px rgba(3,30,50,0.08);transform:translateY(110%);transition:transform .28s ease-in-out;z-index:120}
+.modal.open{transform:translateY(0%)}
+.modal .row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.input{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);}
+.modal .actions{display:flex;gap:8px;justify-content:flex-end}
+@media(max-width:430px){ .hero{padding:14px;border-radius:10px} .hero h1{font-size:1.4rem} .tab{padding:8px 10px;font-size:0.95rem} .card{padding:12px} }
 </style>
 </head>
 <body>
-  <header class="header">
-    <div class="inner">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="logo">
-          <div class="mark">OS</div>
-          <div style="line-height:1">오사카 플래너<br><span style="font-weight:600;font-size:0.92rem;opacity:0.95">성인 준우의 첫 여행</span></div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <nav class="nav">
-          <a href="#">일정</a>
-          <a href="#">지도</a>
-          <a href="#">저장</a>
-        </nav>
-        <div class="searchbar"><input id="globalSearch" placeholder="이름 / 종류 / 라벨로 검색" /><button id="globalSearchBtn" class="button">검색</button></div>
-      </div>
-    </div>
-  </header>
-
   <main class="container">
     <section class="hero">
-      <div class="left">
-        <div style="font-weight:700;opacity:0.95">오사카 · 2025.12.6 — 2025.12.13</div>
-        <h1>성인 준우의 첫 여행</h1>
-        <p>대한항공 느낌의 넓고 깔끔한 레이아웃 — 항공 관련 요소는 제거되었습니다. 모바일 UX와 인쇄(PDF) 레이아웃이 개선되었습니다.</p>
-        <div style="display:flex;gap:12px">
-          <button id="startPlanBtn2" class="cta">여행 시작하기</button>
-          <button id="openAll" class="button" style="background:white">전체 보기</button>
-        </div>
+      <div>
+        <h1 class="title-font">오사카 플래너 — 성인 준우의 첫 여행</h1>
+        <p>간결한 날짜 탭 UI로 빠르게 날짜별 일정을 확인하세요. (상단 바 제거 · 구조 단순화)</p>
       </div>
-      <div style="width:320px">
-        <div class="sidebar">
-          <h3>Day 내비게이션</h3>
-          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
-            <button class="button" id="prevDay2">◀</button>
-            <div style="flex:1;text-align:center"><strong id="dayTitle">전체 일정</strong><div id="dayDate" class="small">전체</div></div>
-            <button class="button" id="nextDay2">▶</button>
-          </div>
-
-          <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(5,33,43,0.04)">
-          <div style="display:flex;gap:8px;margin-bottom:8px">
-            <button id="addTopBtn2" class="button save">＋ 장소 추가 (상단)</button>
-          </div>
-
-          <div style="margin-top:12px">
-            <h4 class="small">필터</h4>
-            <select id="filterType2" style="width:100%;padding:8px;border-radius:8px;margin-top:8px"></select>
-            <select id="filterTag2" style="width:100%;padding:8px;border-radius:8px;margin-top:8px"></select>
-            <div style="display:flex;gap:8px;margin-top:10px">
-              <select id="sortCharm2" style="flex:1;padding:8px;border-radius:8px"><option value="none">기본</option><option value="desc">높은순</option><option value="asc">낮은순</option></select>
-              <select id="filterMove2" style="flex:1;padding:8px;border-radius:8px"><option value="">전체</option><option value="30">30분 이하</option><option value="60">1시간 이하</option></select>
-            </div>
-          </div>
-
-          <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(5,33,43,0.04)">
-          <div>
-            <h4 class="small">총 체류시간</h4>
-            <div id="totalTimeDisplay" class="small">전체: 0분</div>
-            <div id="dayTimeDisplay" class="small" style="margin-top:6px">선택된 날짜: —</div>
-          </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <div class="summary">
+          <div class="pill" id="totalTimeDisplay">전체: 0분</div>
+          <div class="pill" id="totalPriceDisplay">예상비: 0원</div>
         </div>
       </div>
     </section>
 
+    <!-- Tabs: 전체 + Day 1..9 -->
+    <div class="tabs" id="dayTabs" role="tablist" aria-label="날짜 탭"></div>
+
     <div class="layout">
-      <aside class="sidebar">
-        <h3>요약</h3>
-        <p class="small">장소를 추가하거나 선택하면 가운데에서 상세 편집이 가능합니다. 데스크탑에서 오른쪽 섹션은 지도로 자리합니다.</p>
-        <div style="margin-top:12px">
-          <button id="addBottomBtn2" class="button save">＋ 장소 추가 (하단)</button>
-        </div>
-        <div style="margin-top:12px">
-          <button id="printBtn" class="button export">인쇄(PDF)</button>
-        </div>
-      </aside>
+      <div class="controls">
+        <input id="globalSearch" class="search input" placeholder="검색 (이름/타입/라벨)" />
+        <button id="searchBtn" class="tab">검색</button>
+        <button id="exportBtn2" class="tab">내보내기</button>
+        <button id="printBtn" class="tab">인쇄</button>
+      </div>
 
-      <section class="places-area" aria-live="polite">
-        <div id="placesList"></div>
-      </section>
-
-      <aside class="map-frame">
-        <h4>지도 영역 (데스크탑 전용)</h4>
-        <p class="small">여기는 실제 지도(예: 카카오/구글맵)로 연동 가능. 현재는 미리보기/위치 표시용 플레이스홀더입니다.</p>
-        <div id="mapPreview" style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px"></div>
-      </aside>
+      <div class="places" id="placesList"></div>
     </div>
 
+    <!-- 간단한 하단 모달(편집) -->
+    <div id="editModal" class="modal" aria-hidden="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong id="modalTitle">장소 편집</strong>
+        <button id="closeModal">닫기</button>
+      </div>
+      <div class="row"><input id="m_name" class="input" placeholder="장소명"></div>
+      <div class="row"><input id="m_type" class="input" placeholder="종류"></div>
+      <div class="row"><input id="m_price" type="number" class="input" placeholder="예상 가격(원)"></div>
+      <div class="row"><input id="m_stay" type="number" class="input" placeholder="체류시간(분)"></div>
+      <div class="row"><input id="m_label" class="input" placeholder="라벨 (콤마로 구분)"></div>
+      <div class="row"><input id="m_image" type="file" accept="image/*"></div>
+      <div class="actions"><button id="saveModal" class="tab">저장</button><button id="deleteModal" class="tab">삭제</button></div>
+    </div>
+
+    <button id="mobileFab" class="fab">＋</button>
   </main>
 
-  <div class="bottom-fixed">
-    <button id="saveBtn2" class="button save">저장</button>
-    <button id="exportBtn2" class="button export">내보내기 (JSON)</button>
-    <label class="button export" style="display:flex;align-items:center;gap:8px">불러오기 <input id="importFile2" type="file" accept="application/json" style="display:none"/></label>
-    <div style="min-width:12px"></div>
-    <div id="statusText2" class="small">변경 사항 없음</div>
-  </div>
-
-  <!-- 모바일 전용 빠른 추가 버튼(Floating Action Button) -->
-  <button id="mobileFab" class="fab" title="장소 추가">＋</button>
-
 <script>
-/* 변경 요약:
-   - 장소별 체류시간(stayTime, 분) 입력 필드 추가
-   - 요약 패널에 전체/선택 날짜별 총 체류시간 표시
-   - 인쇄 레이아웃에 체류시간 포함
-*/
-
+// 간소화된 스크립트: 탭(전체/Day1..9), 심플 리스트, 모달 편집
 const TOTAL_DAYS = 9;
-let currentDay = 0;
-const RECOMMENDED_LABELS = ['맛집','카페','관광지','쇼핑','뷰포인트','온천','야경','교통','시장','박물관','휴식'];
-
-// DOM refs
-const startPlanBtn = document.getElementById('startPlanBtn2');
-const prevDay = document.getElementById('prevDay2');
-const nextDay = document.getElementById('nextDay2');
-const addTopBtn = document.getElementById('addTopBtn2');
-const addBottomBtn = document.getElementById('addBottomBtn2');
-const placesList = document.getElementById('placesList');
-const filterType = document.getElementById('filterType2');
-const filterTag = document.getElementById('filterTag2');
-const sortCharm = document.getElementById('sortCharm2');
-const filterMove = document.getElementById('filterMove2');
-const saveBtn = document.getElementById('saveBtn2');
-const exportBtn = document.getElementById('exportBtn2');
-const importFile = document.getElementById('importFile2');
-const statusText = document.getElementById('statusText2');
-const dayTitle = document.getElementById('dayTitle');
-const dayDate = document.getElementById('dayDate');
-const mapPreview = document.getElementById('mapPreview');
-const mobileFab = document.getElementById('mobileFab');
-const totalTimeDisplay = document.getElementById('totalTimeDisplay');
-const dayTimeDisplay = document.getElementById('dayTimeDisplay');
+let currentDay = 0; // 0 = 전체
+let editingId = null;
 
 function storageKey(d){ return 'osaka_day_' + d; }
-for(let i=1;i<=TOTAL_DAYS;i++){
-  if(!localStorage.getItem(storageKey(i))){ localStorage.setItem(storageKey(i), JSON.stringify({places:[]})); }
-}
-function loadDay(d){ if(d < 1 || d > TOTAL_DAYS) return {places:[]}; try { return JSON.parse(localStorage.getItem(storageKey(d))) || {places:[]} } catch(e){ return {places:[]} }}
-function saveDay(data, d){ if(d < 1 || d > TOTAL_DAYS) return; localStorage.setItem(storageKey(d), JSON.stringify(data)); }
-function findPlaceDay(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); if((day.places||[]).some(p=>p.id===placeId)) return d; } return null; }
-function getPlaceFromDay(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const p = (day.places||[]).find(x=>x.id===placeId); if(p) return {day:d, place: p}; } return null; }
-function getAllPlaces(){ const all = []; for(let d=1; d<=TOTAL_DAYS; d++){ (loadDay(d).places || []).forEach(p => all.push({...p, _day: d})); } return all; }
-function newPlace(){ return { id: 'p_' + Date.now() + Math.floor(Math.random()*1000), name:'무제 장소', type:'', location:3, price:0, charm:3, memo:'', moveToNext:'', labels:[], image: '', stayTime: 0 }; }
-function setStatus(txt){ statusText.textContent = txt; if(txt === '변경 사항 없음') saveBtn.classList.remove('active'); else saveBtn.classList.add('active'); }
+for(let i=1;i<=TOTAL_DAYS;i++){ if(!localStorage.getItem(storageKey(i)) ) localStorage.setItem(storageKey(i), JSON.stringify({places:[]})); }
+function loadDay(d){ try{ return JSON.parse(localStorage.getItem(storageKey(d))) || {places:[]} }catch(e){ return {places:[]} }}
+function saveDay(data,d){ localStorage.setItem(storageKey(d), JSON.stringify(data)); }
+function getAllPlaces(){ const out=[]; for(let d=1; d<=TOTAL_DAYS; d++){ (loadDay(d).places||[]).forEach(p=> out.push({...p, _day:d})); } return out; }
+function newPlace(){ return { id: 'p_'+Date.now(), name:'무제 장소', type:'', price:0, stayTime:0, labels:[], image:'' }; }
 
-function rebuildFilterOptions(){ const all = getAllPlaces(); const types = Array.from(new Set(all.map(p => (p.type||'').trim()).filter(Boolean))).sort(); filterType.innerHTML = '<option value="">전체</option>'; types.forEach(t => { const o=document.createElement('option'); o.value=t; o.textContent=t; filterType.appendChild(o); }); const allLabels = new Set(RECOMMENDED_LABELS); all.forEach(p => (p.labels||[]).forEach(l=>allLabels.add(l))); filterTag.innerHTML = '<option value="">전체</option>'; Array.from(allLabels).sort().forEach(l => { const o=document.createElement('option'); o.value=l; o.textContent=l; filterTag.appendChild(o); }); }
+// Tabs render
+const dayTabs = document.getElementById('dayTabs');
+function renderTabs(){ dayTabs.innerHTML=''; const addTab=(label, val)=>{ const b=document.createElement('button'); b.className='tab'; b.textContent=label; b.dataset.day=val; b.addEventListener('click', ()=> { currentDay = Number(val); render(); setActiveTab(); }); dayTabs.appendChild(b); };
+  addTab('전체',0);
+  for(let i=1;i<=TOTAL_DAYS;i++) addTab('Day '+i, i);
+  setActiveTab(); }
+function setActiveTab(){ Array.from(dayTabs.children).forEach(ch=>{ ch.classList.toggle('active', Number(ch.dataset.day) === currentDay); }); }
 
-function formatMinutes(m){ m = Number(m) || 0; if(m <= 0) return '0분'; const h = Math.floor(m / 60); const mm = m % 60; if(h>0) return `${h}시간 ${mm}분`; return `${mm}분`; }
+// List render
+const placesList = document.getElementById('placesList');
+function render(){ // totals
+  const all = getAllPlaces(); const totalTime = all.reduce((s,p)=> s + (Number(p.stayTime)||0),0); const totalPrice = all.reduce((s,p)=> s + (Number(p.price)||0),0);
+  document.getElementById('totalTimeDisplay').textContent = '전체: ' + (totalTime>0? (Math.floor(totalTime/60)+'h '+(totalTime%60)+'m') : '0분');
+  document.getElementById('totalPriceDisplay').textContent = '예상비: ' + totalPrice + '원';
 
-function calculateTotals(){ // returns { totalAll: minutes, perDay: {1:mins,...} }
-  const perDay = {};
-  let totalAll = 0;
-  for(let d=1; d<=TOTAL_DAYS; d++){
-    const day = loadDay(d);
-    const mins = (day.places || []).reduce((acc,p)=> acc + (Number(p.stayTime) || 0), 0);
-    perDay[d] = mins; totalAll += mins;
-  }
-  return { totalAll, perDay };
-}
+  let items = (currentDay===0) ? all : (loadDay(currentDay).places||[]).map(p=>({...p,_day:currentDay}));
+  const q = (document.getElementById('globalSearch').value||'').trim().toLowerCase(); if(q) items = items.filter(p=> ((p.name||'')+' '+(p.type||'')+' '+(p.labels||[]).join(' ')).toLowerCase().includes(q));
+  placesList.innerHTML='';
+  if(items.length===0){ const emp=document.createElement('div'); emp.className='card'; emp.innerHTML='<div>장소가 없습니다. + 버튼으로 추가하세요.</div>'; placesList.appendChild(emp); return; }
+  items.forEach(p=>{ const el=document.createElement('div'); el.className='card'; el.dataset.id=p.id; const left=document.createElement('div'); left.className='meta'; const img=document.createElement('img'); img.className='place-thumb'; img.src=p.image||'https://via.placeholder.com/160x120?text=No+Image'; left.appendChild(img); const txt=document.createElement('div'); txt.innerHTML='<div class="title-font" style="font-weight:800">'+(p.name||'무제 장소')+'</div><div class="small">'+(p.type||'종류 미지정')+' · Day '+(p._day||'?')+'</div>'; left.appendChild(txt);
+    const right=document.createElement('div'); right.style.textAlign='right'; right.innerHTML='<div class="small">가격: '+(p.price||0)+'원</div><div class="small">체류: '+(p.stayTime||0)+'분</div>';
+    const btn=document.createElement('button'); btn.textContent='편집'; btn.className='tab'; btn.style.marginTop='8px'; btn.addEventListener('click', ()=> openEdit(p)); right.appendChild(btn);
+    el.appendChild(left); el.appendChild(right); placesList.appendChild(el); }); }
 
-// reorder helper
-function reorderPlacesWithinDay(dayIndex, fromIdx, toIdx){ const d = loadDay(dayIndex); if(!d || !d.places) return; const arr = d.places; const [item] = arr.splice(fromIdx,1); arr.splice(toIdx,0,item); saveDay(d, dayIndex); setStatus('저장됨 — 순서 변경'); render(); }
+// Modal edit
+const modal = document.getElementById('editModal'); const m_name = document.getElementById('m_name'); const m_type = document.getElementById('m_type'); const m_price = document.getElementById('m_price'); const m_stay = document.getElementById('m_stay'); const m_label = document.getElementById('m_label'); const m_image = document.getElementById('m_image');
+function openEdit(p){ editingId = p.id; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.getElementById('modalTitle').textContent = (p.name||'무제 장소'); m_name.value = p.name||''; m_type.value = p.type||''; m_price.value = p.price||0; m_stay.value = p.stayTime||0; m_label.value = (p.labels||[]).join(','); }
+function closeEdit(){ editingId = null; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+function saveEdit(){ const name=m_name.value.trim(); const type=m_type.value.trim(); const price=Number(m_price.value||0); const stay=Number(m_stay.value||0); const labels = m_label.value.split(',').map(s=>s.trim()).filter(Boolean);
+  // find and save
+  let found=false; for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const idx = (day.places||[]).findIndex(x=>x.id===editingId); if(idx>-1){ day.places[idx] = {...day.places[idx], name, type, price, stayTime:stay, labels}; saveDay(day,d); found=true; break; } }
+  if(!found){ // new (if editingId not in storage) -> add to currentDay
+    const dayIndex = currentDay===0 ? 1 : currentDay; const day = loadDay(dayIndex); const p = newPlace(); p.id = editingId; p.name=name; p.type=type; p.price=price; p.stayTime=stay; p.labels=labels; day.places.push(p); saveDay(day, dayIndex); }
+  closeEdit(); render(); }
 
-function render(){
-  dayTitle.textContent = (currentDay === 0) ? '전체 일정' : 'Day ' + currentDay;
-  if(dayDate) dayDate.textContent = (currentDay === 0) ? '전체' : '';
-  rebuildFilterOptions();
-  const totals = calculateTotals();
-  totalTimeDisplay.textContent = '전체: ' + formatMinutes(totals.totalAll);
-  dayTimeDisplay.textContent = (currentDay===0) ? '선택된 날짜: 전체' : ('선택된 날짜: ' + formatMinutes(totals.perDay[currentDay] || 0));
+function deleteEdit(){ if(!confirm('정말 삭제하시겠습니까?')) return; for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const idx = (day.places||[]).findIndex(x=>x.id===editingId); if(idx>-1){ day.places.splice(idx,1); saveDay(day,d); break; } } closeEdit(); render(); }
 
-  let items = (currentDay === 0) ? getAllPlaces() : (loadDay(currentDay).places || []).map(p => ({...p, _day: currentDay}));
+// File image input handling (client-side read)
+m_image.addEventListener && m_image.addEventListener('change', (ev)=>{ const f = ev.target.files[0]; if(!f || !editingId) return; const r=new FileReader(); r.onload = e => { // save image to the item
+    for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const idx = (day.places||[]).findIndex(x=>x.id===editingId); if(idx>-1){ day.places[idx].image = e.target.result; saveDay(day,d); break; } }
+    render(); }; r.readAsDataURL(f); });
 
-  if(currentDay === 0){ const tfilter = filterType.value; const tagfilter = filterTag.value; const movefilter = filterMove.value; const q = (document.getElementById('globalSearch') && document.getElementById('globalSearch').value || '').trim().toLowerCase(); items = items.filter(p => { if(tfilter && ((p.type||'').toLowerCase() !== tfilter.toLowerCase())) return false; if(tagfilter && !(p.labels||[]).includes(tagfilter)) return false; if(movefilter && String(p.moveToNext || '') !== movefilter) return false; if(q){ const hay = ((p.name||'') + ' ' + (p.type||'') + ' ' + ((p.labels||[]).join(' '))).toLowerCase(); if(!hay.includes(q)) return false; } return true; }); if(sortCharm.value === 'desc') items.sort((a,b)=> (b.charm || 0) - (a.charm || 0)); if(sortCharm.value === 'asc') items.sort((a,b)=> (a.charm || 0) - (b.charm || 0)); }
+// add new place and open modal
+const fab = document.getElementById('mobileFab'); fab.addEventListener('click', ()=>{ const dayIndex = currentDay===0?1:currentDay; const day = loadDay(dayIndex); const p = newPlace(); day.places.push(p); saveDay(day, dayIndex); render(); openEdit(p); });
 
-  placesList.innerHTML = '';
-  if(!items || items.length === 0){ const emp = document.createElement('div'); emp.className='card'; emp.innerHTML = '<div style="text-align:center;width:100%"><h3>장소가 없습니다</h3><p class="small">첫 장소를 추가해보세요 ✨</p><div style="margin-top:12px"><button id="emptyAddBtn" class="button save">＋ 추가</button></div></div>'; placesList.appendChild(emp); const btn = document.getElementById('emptyAddBtn'); if(btn) btn.addEventListener('click', ()=> addPlaceToDay(currentDay===0?1:currentDay,false)); return; }
+// modal actions
+document.getElementById('closeModal').addEventListener('click', closeEdit);
+document.getElementById('saveModal').addEventListener('click', saveEdit);
+document.getElementById('deleteModal').addEventListener('click', deleteEdit);
 
-  // populate map preview thumbnails
-  mapPreview.innerHTML = '';
-  items.slice(0,6).forEach(p=>{ const img = document.createElement('img'); img.alt=p.name || ''; img.className='place-thumb'; img.src = p.image || 'https://via.placeholder.com/160x120?text=No+Image'; mapPreview.appendChild(img); });
+// export
+document.getElementById('exportBtn2').addEventListener('click', ()=>{ const dump={}; for(let d=1; d<=TOTAL_DAYS; d++) dump['Day'+d] = loadDay(d); const blob=new Blob([JSON.stringify(dump,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='osaka_export.json'; a.click(); URL.revokeObjectURL(a.href); });
 
-  items.forEach((p, idx) => {
-    const el = document.createElement('div'); el.className = 'card place'; el.dataset.id = p.id; el.setAttribute('draggable','true');
-    const left = document.createElement('div'); left.className='meta';
-    const badge = document.createElement('div'); badge.className='badge'; badge.textContent = p.charm || 3;
-    const info = document.createElement('div'); info.style.minWidth='220px';
-    const rowTop = document.createElement('div'); rowTop.style.display='flex'; rowTop.style.gap='10px'; rowTop.style.alignItems='center';
-    const thumb = document.createElement('img'); thumb.className='place-thumb'; thumb.src = p.image || 'https://via.placeholder.com/160x120?text=No+Image';
-    const textWrap = document.createElement('div');
-    const name = document.createElement('div'); name.style.fontWeight='800'; name.textContent = p.name || '무제 장소';
-    const type = document.createElement('div'); type.className='small'; type.textContent = (p.type || '종류 미지정') + ' · Day ' + (p._day || '?');
-    textWrap.appendChild(name); textWrap.appendChild(type);
-    rowTop.appendChild(thumb); rowTop.appendChild(textWrap);
-    info.appendChild(rowTop);
-    left.appendChild(badge); left.appendChild(info);
+// print
+document.getElementById('printBtn').addEventListener('click', ()=>{ const w=window.open('','_blank'); let html='<!doctype html><html><head><meta charset="utf-8"><title>Print</title></head><body>'; for(let d=1; d<=TOTAL_DAYS; d++){ const day=loadDay(d); if(!day.places || !day.places.length) continue; html += `<h2>Day ${d}</h2>`; day.places.forEach(p=>{ html += `<div><strong>${p.name}</strong> — ${p.type} — ${p.price}원 — ${p.stayTime}분</div>`; }); } html += '</body></html>'; w.document.write(html); w.document.close(); setTimeout(()=>w.print(),400); });
 
-    const right = document.createElement('div'); right.style.display='flex'; right.style.flexDirection='column'; right.style.alignItems='flex-end'; right.style.minWidth='160px';
-    const priceDisplay = document.createElement('div'); priceDisplay.className='small'; priceDisplay.textContent = '가격: ' + (p.price ? (p.price + '원') : '미정');
-    const timeDisplay = document.createElement('div'); timeDisplay.className='small'; timeDisplay.textContent = '체류: ' + formatMinutes(p.stayTime || 0);
-    const chipsWrap = document.createElement('div'); chipsWrap.className='chips'; (p.labels||[]).forEach(lbl=>{ const c=document.createElement('div'); c.className='chip'; c.textContent=lbl; chipsWrap.appendChild(c); });
-    const actions = document.createElement('div'); actions.className='controls';
-    const openBtn = document.createElement('button'); openBtn.textContent='⋯'; openBtn.className='button';
-    const gotoBtn = document.createElement('button'); gotoBtn.textContent='해당일로'; gotoBtn.className='button';
-    actions.appendChild(openBtn); actions.appendChild(gotoBtn);
-    right.appendChild(priceDisplay); right.appendChild(timeDisplay); right.appendChild(chipsWrap); right.appendChild(actions);
+// search
+document.getElementById('searchBtn').addEventListener('click', ()=> render());
 
-    el.appendChild(left); el.appendChild(right);
-
-    // detail
-    const detail = document.createElement('div'); detail.className='detail';
-    const inputName = document.createElement('input'); inputName.className='input'; inputName.placeholder='장소명'; inputName.value = p.name || '';
-    const inputType = document.createElement('input'); inputType.className='input'; inputType.placeholder='종류'; inputType.value = p.type || '';
-    // price input (numeric)
-    const priceRow = document.createElement('div'); priceRow.style.display='flex'; priceRow.style.gap='8px'; priceRow.style.alignItems='center'; priceRow.style.marginTop='8px';
-    const priceLabel = document.createElement('div'); priceLabel.textContent='예상 가격(원)'; priceLabel.className='small';
-    const priceInput = document.createElement('input'); priceInput.type='number'; priceInput.min='0'; priceInput.placeholder='0'; priceInput.value = p.price || 0; priceInput.style.padding='8px'; priceInput.style.borderRadius='8px'; priceInput.style.border='1px solid rgba(0,0,0,0.06)';
-    priceInput.addEventListener('input', ()=> { immediateUpdate({price: Number(priceInput.value || 0)}); });
-    priceRow.appendChild(priceLabel); priceRow.appendChild(priceInput);
-
-    // stay time input (minutes)
-    const stayRow = document.createElement('div'); stayRow.style.display='flex'; stayRow.style.gap='8px'; stayRow.style.alignItems='center'; stayRow.style.marginTop='8px';
-    const stayLabel = document.createElement('div'); stayLabel.textContent='체류시간(분)'; stayLabel.className='small';
-    const stayInput = document.createElement('input'); stayInput.type='number'; stayInput.min='0'; stayInput.placeholder='분'; stayInput.value = p.stayTime || 0; stayInput.style.padding='8px'; stayInput.style.borderRadius='8px'; stayInput.style.border='1px solid rgba(0,0,0,0.06)';
-    stayInput.addEventListener('input', ()=> { immediateUpdate({stayTime: Number(stayInput.value || 0)}); });
-    stayRow.appendChild(stayLabel); stayRow.appendChild(stayInput);
-
-    const labelRow = document.createElement('div'); labelRow.style.display='flex'; labelRow.style.gap='8px'; labelRow.style.flexWrap='wrap'; labelRow.style.marginTop='8px'; RECOMMENDED_LABELS.forEach(lbl => { const btn = document.createElement('button'); btn.type='button'; btn.className='chip'; btn.textContent=lbl; if((p.labels||[]).includes(lbl)){ btn.style.background='linear-gradient(90deg,#00b0ff,#0077c8)'; btn.style.color='#012'; } btn.addEventListener('click', ()=> toggleLabel(p.id, lbl)); labelRow.appendChild(btn); });
-    const addLabelBox = document.createElement('div'); addLabelBox.style.display='flex'; addLabelBox.style.gap='8px'; addLabelBox.style.marginTop='8px';
-    const labelInput = document.createElement('input'); labelInput.className='input'; labelInput.placeholder='직접 라벨 추가';
-    const labelAddBtn = document.createElement('button'); labelAddBtn.className='button'; labelAddBtn.textContent='추가'; labelAddBtn.addEventListener('click', ()=>{ const val=(labelInput.value||'').trim(); if(!val) return; addLabelToPlace(p.id, val); labelInput.value=''; render(); });
-    addLabelBox.appendChild(labelInput); addLabelBox.appendChild(labelAddBtn);
-
-    // image upload
-    const imgRow = document.createElement('div'); imgRow.style.display='flex'; imgRow.style.gap='8px'; imgRow.style.alignItems='center'; imgRow.style.marginTop='8px';
-    const imgInput = document.createElement('input'); imgInput.type='file'; imgInput.accept='image/*';
-    imgInput.addEventListener('change', (ev)=>{ const f = ev.target.files[0]; if(!f) return; const r=new FileReader(); r.onload = e => { immediateUpdate({image: e.target.result}); }; r.readAsDataURL(f); });
-    const imgLabel = document.createElement('div'); imgLabel.textContent='사진 업로드'; imgLabel.className='small';
-    imgRow.appendChild(imgLabel); imgRow.appendChild(imgInput);
-
-    const delBtn = document.createElement('button'); delBtn.className='button export'; delBtn.textContent='삭제'; delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')) deletePlaceById(p.id); });
-
-    detail.appendChild(inputName); detail.appendChild(inputType); detail.appendChild(priceRow); detail.appendChild(stayRow); detail.appendChild(labelRow); detail.appendChild(addLabelBox); detail.appendChild(imgRow); detail.appendChild(delBtn);
-
-    el.appendChild(detail);
-
-    openBtn.addEventListener('click', ()=>{ const was = el.classList.toggle('open'); if(was) setTimeout(()=> el.scrollIntoView({behavior:'smooth', block:'center'}), 140); });
-
-    function immediateUpdate(updates){ const fd = getPlaceFromDay(p.id); const targetDay = fd ? fd.day : (p._day || 1); if(!fd){ const dayObj = loadDay(targetDay); dayObj.places = dayObj.places || []; dayObj.places.push({...p}); saveDay(dayObj, targetDay); }
-      const dayObj = loadDay(targetDay);
-      const idx = (dayObj.places||[]).findIndex(x=>x.id===p.id);
-      if(idx === -1) return;
-      dayObj.places[idx] = {...dayObj.places[idx], ...updates};
-      saveDay(dayObj, targetDay);
-      setStatus('저장됨');
-      render();
-    }
-
-    inputName.addEventListener('input', ()=> immediateUpdate({name: inputName.value})); inputType.addEventListener('input', ()=> immediateUpdate({type: inputType.value}));
-
-    gotoBtn.addEventListener('click', ()=>{ const assignedDay = (getPlaceFromDay(p.id) || {}).day || (p._day || 1); if(assignedDay >=1 && assignedDay <= TOTAL_DAYS){ currentDay = assignedDay; render(); window.scrollTo({top:0,behavior:'smooth'}); } else alert('할당된 날짜가 없습니다.'); });
-
-    // drag handlers
-    el.addEventListener('dragstart', (ev)=>{ ev.dataTransfer.setData('text/plain', p.id); ev.dataTransfer.effectAllowed='move'; el.style.opacity='0.5'; });
-    el.addEventListener('dragend', ()=>{ el.style.opacity='1'; });
-    el.addEventListener('dragover', (ev)=>{ ev.preventDefault(); ev.dataTransfer.dropEffect='move'; });
-    el.addEventListener('drop', (ev)=>{ ev.preventDefault(); const draggedId = ev.dataTransfer.getData('text/plain'); if(!draggedId || draggedId === p.id) return; // find positions
-      const srcInfo = getPlaceFromDay(draggedId); const dstInfo = getPlaceFromDay(p.id);
-      if(!srcInfo || !dstInfo) return;
-      const srcDay = srcInfo.day, dstDay = dstInfo.day;
-      const srcArr = loadDay(srcDay).places; const dstArr = loadDay(dstDay).places;
-      const fromIdx = srcArr.findIndex(x=>x.id===draggedId); const toIdx = dstArr.findIndex(x=>x.id===p.id);
-      if(fromIdx>-1 && toIdx>-1){ // if same day: reorder
-        if(srcDay === dstDay) reorderPlacesWithinDay(srcDay, fromIdx, toIdx);
-        else { // move between days
-          const [item] = srcArr.splice(fromIdx,1); dstArr.splice(toIdx,0,item); saveDay({places:srcArr}, srcDay); saveDay({places:dstArr}, dstDay); setStatus('저장됨 — 이동'); render(); }
-      }
-    });
-
-    placesList.appendChild(el);
-  });
-}
-
-function toggleLabel(placeId, label){ const rec = getPlaceFromDay(placeId); if(!rec) return; const day = loadDay(rec.day); const idx = day.places.findIndex(x=>x.id===placeId); if(idx===-1) return; const labels = day.places[idx].labels || []; if(labels.includes(label)) day.places[idx].labels = labels.filter(x=>x!==label); else day.places[idx].labels = [...labels, label]; saveDay(day, rec.day); setStatus('저장됨'); render(); }
-function addLabelToPlace(placeId, label){ const rec = getPlaceFromDay(placeId); const dayIndex = rec ? rec.day : 1; const day = loadDay(dayIndex); const idx = day.places.findIndex(x=>x.id===placeId); if(idx===-1) return; day.places[idx].labels = day.places[idx].labels || []; if(!day.places[idx].labels.includes(label)) day.places[idx].labels.push(label); saveDay(day, dayIndex); setStatus('저장됨'); }
-function deletePlaceById(placeId){ for(let d=1; d<=TOTAL_DAYS; d++){ const day = loadDay(d); const idx = (day.places||[]).findIndex(x=>x.id===placeId); if(idx>-1){ day.places.splice(idx,1); saveDay(day,d); setStatus('저장됨 — 삭제'); render(); return; } } alert('삭제 실패: 항목을 찾을 수 없음'); }
-
-function addPlaceToDay(targetDay, atTop=false){ const p = newPlace(); const dayIndex = (targetDay >= 1 && targetDay <= TOTAL_DAYS) ? targetDay : 1; const day = loadDay(dayIndex); day.places = day.places || []; if(atTop) day.places.unshift(p); else day.places.push(p); saveDay(day, dayIndex); setStatus('저장됨 — 추가'); render(); }
-
-addTopBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, true); });
-addBottomBtn.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); });
-prevDay.addEventListener('click', ()=> { currentDay = (currentDay - 1 + (TOTAL_DAYS+1)) % (TOTAL_DAYS+1); render(); });
-nextDay.addEventListener('click', ()=> { currentDay = (currentDay + 1) % (TOTAL_DAYS+1); render(); });
-
-[filterType, filterTag, sortCharm, filterMove].forEach(el => { el.addEventListener && el.addEventListener('input', ()=> { if(currentDay===0) render(); }); });
-
-saveBtn.addEventListener('click', ()=> { setStatus('변경 사항 없음'); });
-exportBtn.addEventListener('click', ()=> { const dump = {}; for(let d=1; d<=TOTAL_DAYS; d++) dump['Day'+d] = loadDay(d); const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='osaka_trip_export.json'; a.click(); URL.revokeObjectURL(url); });
-importFile.addEventListener('change', e => { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => { try{ const obj = JSON.parse(ev.target.result); let found=false; for(let d=1; d<=TOTAL_DAYS; d++){ if(obj['Day'+d]){ saveDay(obj['Day'+d], d); found=true; } } if(!found && Array.isArray(obj.places)){ saveDay({places: obj.places}, 1); found=true; } if(found){ alert('불러오기 완료'); setStatus('변경 사항 없음'); render(); } else alert('파일 형식이 올바르지 않습니다.'); }catch(err){ alert('파일 읽기 실패'); console.error(err); } }; r.readAsText(f); e.target.value=''; });
-
-startPlanBtn.addEventListener('click', ()=>{ currentDay = 1; render(); window.scrollTo({top:0,behavior:'smooth'}); });
-
-// mobile FAB
-if(mobileFab) mobileFab.addEventListener('click', ()=> { addPlaceToDay(currentDay===0?1:currentDay, false); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}); });
-
-// print: create a clean printable window with cover + per-day sections (체류시간 포함)
-const printBtn = document.getElementById('printBtn'); if(printBtn) printBtn.addEventListener('click', ()=>{
-  const win = window.open('','_blank');
-  const title = document.querySelector('.hero h1') ? document.querySelector('.hero h1').textContent : '여행 일정';
-  const dates = document.querySelector('.hero div') ? document.querySelector('.hero div').textContent : '';
-  const style = `body{font-family:Inter,system-ui,-apple-system,"Noto Sans KR";color:#05212b;padding:28px} .cover{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh} .cover h1{font-size:36px;margin:6px 0} .cover p{font-size:18px;color:#475569} .day{page-break-after:always;margin-top:24px} .place{border-bottom:1px solid #e6eef6;padding:12px 0;display:flex;gap:12px} .place img{width:120px;height:84px;object-fit:cover;border-radius:8px} .meta{flex:1} .meta h3{margin:0 0 6px 0} .meta p{margin:0;color:#475569}</style>`;
-  let html = `<!doctype html><html><head><meta charset="utf-8"><title>Printable - ${title}</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">${style}</head><body>`;
-  html += `<div class="cover"><h1>${title}</h1><p>${dates}</p><p style="margin-top:12px;color:#94a3b8">출력일: ${new Date().toLocaleString()}</p></div>`;
-  for(let d=1; d<=TOTAL_DAYS; d++){
-    const day = loadDay(d);
-    if(!day || !day.places || day.places.length===0) continue;
-    const dayTotal = (day.places||[]).reduce((acc,p)=> acc + (Number(p.stayTime)||0), 0);
-    html += `<div class="day"><h2>Day ${d} — 총 체류: ${formatMinutes(dayTotal)}</h2>`;
-    day.places.forEach(p => {
-      html += `<div class="place">`;
-      html += `<img src="${p.image || 'https://via.placeholder.com/160x120?text=No+Image'}" alt="">`;
-      html += `<div class="meta"><h3>${p.name || '무제 장소'}</h3><p>종류: ${p.type || '미정'} · 가격: ${p.price ? p.price + '원' : '미정'} · 체류: ${formatMinutes(p.stayTime || 0)}</p><p>${(p.labels||[]).join(', ')}</p></div>`;
-      html += `</div>`;
-    });
-    html += `</div>`;
-  }
-  html += '</body></html>';
-  win.document.open(); win.document.write(html); win.document.close();
-  // delay slightly to ensure images load
-  setTimeout(()=>{ win.focus(); win.print(); }, 600);
-});
-
-// small niceties
-const globalSearchBtn = document.getElementById('globalSearchBtn'); if(globalSearchBtn) globalSearchBtn.addEventListener('click', ()=> render());
-
-// initial render
-render(); setStatus('변경 사항 없음');
+// initial
+renderTabs(); render();
 </script>
 </body>
 </html>
